@@ -4,7 +4,7 @@ import SocialLinks from '../SocialLinks/SocialLinks.vue'
 
 <template>
   <div class="header-component">
-    <div class="logo">Logo</div>
+    <div class="logo"><img src="/src/media/icons/logo.png" /></div>
     <SocialLinks />
   </div>
 </template>
@@ -12,10 +12,18 @@ import SocialLinks from '../SocialLinks/SocialLinks.vue'
 <style scoped>
 .header-component {
   outline: 1px solid red;
-
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 6rem;
+  height: 7rem;
+
+  .logo {
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 </style>

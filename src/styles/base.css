@@ -11,19 +11,23 @@ html {
 
 #app {
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
   font-size: 1.6rem;
-  outline: 1px solid wheat;
+  background-color: rgba(83, 54, 0, 0.123);
   width: 100%;
   height: 100vh;
   padding: 0 2em;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
 }
 
 .main-window {
   width: 70%;
-  height: 100%;
+  flex-grow: 1;
   outline: 1px solid white;
 }

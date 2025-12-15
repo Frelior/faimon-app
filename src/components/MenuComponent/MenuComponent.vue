@@ -78,7 +78,7 @@ onMounted(() => {
 .menu-component {
   position: absolute;
   right: 0;
-  top: 6rem;
+  top: 8rem;
   display: flex;
   flex-direction: column;
 
@@ -95,18 +95,25 @@ onMounted(() => {
       align-items: flex-end;
 
       li {
-        font-family: 'Unbounded';
+        font-family: 'Unbounded', sans-serif;
+        font-weight: 400;
+        transition:
+          transform 0.2s ease,
+          font-variation-settings 0.2s ease,
+          opacity 0.2s ease;
 
         font-size: 2.5rem;
-        line-height: 6rem;
+        opacity: 0.9;
+        line-height: 5rem;
         text-align: right;
         margin-right: 1rem;
         cursor: pointer;
         transform-origin: right center;
-        transition: all 0.3s ease-in-out;
 
         &.active {
           transform: scale(1.4);
+          font-weight: 600;
+          opacity: 1;
         }
 
         &:hover {
@@ -116,12 +123,12 @@ onMounted(() => {
     }
 
     .indicator {
-      margin-top: 3rem;
+      margin-top: 2.5rem;
       width: 5rem;
       height: 0.5rem;
       background-color: var(--font-orange);
       transform: translateY(-50%);
-      transition: all 0.3s ease-in-out;
+      transition: transform 0.2s ease;
     }
   }
 }
