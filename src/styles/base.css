@@ -11,19 +11,35 @@ html {
 
 #app {
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
   font-size: 1.6rem;
-  outline: 1px solid wheat;
   width: 100%;
   height: 100vh;
-  padding: 0 2em;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+}
+
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.view-container {
+  outline: 1px solid white;
+}
+
+.mx-auto {
+  margin: 0 auto;
 }
 
 .main-window {
   width: 70%;
-  height: 100%;
-  outline: 1px solid white;
+  flex-grow: 1;
+  /* outline: 1px solid white; */
+  padding: 1rem;
 }
