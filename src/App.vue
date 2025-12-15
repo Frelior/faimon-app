@@ -5,8 +5,14 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 
 <template>
   <HeaderComponent />
-  <MenuComponent />
-  <div class="main-window"><router-view /></div>
+  <div class="container">
+    <MenuComponent />
+    <div class="main-window"><router-view /></div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  /* outline: 1px solid red; */
+}
+</style>

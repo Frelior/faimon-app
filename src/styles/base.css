@@ -26,11 +26,14 @@ body {
 
 .container {
   max-width: 1920px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
 }
 .view-container {
-  outline: 1px solid white;
+  /* outline: 1px solid white; */
 }
 
 .mx-auto {
@@ -38,8 +41,15 @@ body {
 }
 
 .main-window {
-  width: 70%;
+  width: 80%;
+  height: 100%;
   flex-grow: 1;
   /* outline: 1px solid white; */
   padding: 1rem;
+  margin-right: auto;
+
+  border-inline-end: 3px solid;
+  border-block-start: 3px solid;
+  border-image-source: radial-gradient(circle at top right, var(--border-gray), transparent 50%);
+  border-image-slice: 1;
 }

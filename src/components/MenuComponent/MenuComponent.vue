@@ -78,7 +78,7 @@ onMounted(() => {
 .menu-component {
   position: absolute;
   right: 0;
-  top: 12rem;
+  top: 2rem;
   display: flex;
   flex-direction: column;
   /* outline: 1px solid white; */
