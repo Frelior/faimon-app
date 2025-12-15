@@ -26,8 +26,18 @@ body {
   display: flex;
 }
 
+.container {
+  max-width: 1920px;
+  width: 100%;
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+
 .main-window {
   width: 70%;
   flex-grow: 1;
   outline: 1px solid white;
+  padding: 1rem;
 }

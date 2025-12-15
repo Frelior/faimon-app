@@ -12,11 +12,11 @@ import SocialLinks from '../SocialLinks/SocialLinks.vue'
 <style scoped>
 .header-component {
   outline: 1px solid red;
-  padding: 1rem;
+  padding: 2rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 7rem;
+  height: 10rem;
 
   .logo {
     height: 100%;

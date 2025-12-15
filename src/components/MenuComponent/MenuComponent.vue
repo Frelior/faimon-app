@@ -78,13 +78,13 @@ onMounted(() => {
 .menu-component {
   position: absolute;
   right: 0;
-  top: 8rem;
+  top: 10rem;
   display: flex;
   flex-direction: column;
+  outline: 1px solid white;
 
   .menu {
     display: flex;
-    /* outline: 1px solid white; */
     color: var(--font-orange);
     position: relative;
 
