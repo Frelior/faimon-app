@@ -17,10 +17,8 @@ html {
 
 body {
   font-size: 1.6rem;
-  background-color: rgba(83, 54, 0, 0.123);
   width: 100%;
   height: 100vh;
-  padding: 0 2em;
   position: relative;
   margin: 0 auto;
   display: flex;
@@ -28,7 +26,11 @@ body {
 
 .container {
   max-width: 1920px;
-  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.view-container {
+  outline: 1px solid white;
 }
 
 .mx-auto {
@@ -38,6 +40,6 @@ body {
 .main-window {
   width: 70%;
   flex-grow: 1;
-  outline: 1px solid white;
+  /* outline: 1px solid white; */
   padding: 1rem;
 }

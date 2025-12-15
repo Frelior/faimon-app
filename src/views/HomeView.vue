@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="home-view">
+  <div class="home-view view-container">
     <h1>Заголовок домашней страницы</h1>
     <p>
       Какой-то текст с описанием игры или хз чем Lorem ipsum dolor sit amet consectetur adipisicing
@@ -30,4 +30,10 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.home-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+</style>
