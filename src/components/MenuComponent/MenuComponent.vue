@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick, watch } from 'vue'
+import { ref, onMounted, nextTick, watch, onBeforeUnmount } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const menuItems = [
-  { label: 'Главная', to: '/home' },
   { label: 'Персонажи', to: '/characters' },
   { label: 'Тир-лист', to: '/tierlist' },
+  { label: 'Инфо', to: '/info' },
 ]
 const activeIndex = ref(0)
 const itemRefs = ref<(HTMLElement | null)[]>([])
@@ -33,8 +33,18 @@ watch(
   { immediate: true },
 )
 
+const onResize = () => {
+  indicatorY.value = itemRefs.value[activeIndex.value]?.offsetTop ?? 0
+}
+
+window.addEventListener('resize', onResize)
+
 onMounted(() => {
   setActive(0)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize)
 })
 </script>
 
@@ -78,7 +88,7 @@ onMounted(() => {
 .menu-component {
   position: absolute;
   right: 0;
-  top: 12rem;
+  top: 0rem;
   display: flex;
   flex-direction: column;
   /* outline: 1px solid white; */
@@ -124,7 +134,7 @@ onMounted(() => {
 
     .indicator {
       margin-top: 2.5rem;
-      width: 5rem;
+      width: 4rem;
       height: 0.5rem;
       background-color: var(--font-orange);
       transform: translateY(-50%);

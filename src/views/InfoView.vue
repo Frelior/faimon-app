@@ -1,0 +1,104 @@
+<script setup lang="ts"></script>
+
+<template>
+  <div class="info-view view-container">
+    <h1>FAIMON BLEACH SOUL RESONANCE</h1>
+    <div class="description">
+      <p>
+        Этот сайт создан как информационный портал по Bleach: Soul Resonance — здесь вы найдёте
+        описания персонажей, их навыки, характеристики, механики игры и полезную информацию.
+      </p>
+      <p>
+        Bleach: Soul Resonance — это экшен-игра по мотивам культового аниме и манги Bleach, в
+        которой игроки погружаются в мир синигами, пустых и духовных битв. Игра сочетает динамичную
+        боевую систему, зрелищные способности персонажей и узнаваемую атмосферу оригинального
+        произведения.
+      </p>
+      <p>
+        Игрокам доступны культовые персонажи вселенной Bleach, каждый из которых обладает уникальным
+        стилем боя, наборами умений и формами усиления. В сражениях важны тайминги, комбинации атак
+        и грамотное использование способностей, что делает бои быстрыми и тактически насыщенными.
+      </p>
+      <p>
+        Проект ориентирован как на одиночное прохождение, так и на соревновательные режимы, позволяя
+        раскрывать персонажей, улучшать их характеристики и собирать оптимальные билды.
+      </p>
+    </div>
+
+    <div class="news">
+      <hr />
+      <h2>Последние новости портала:</h2>
+      <ul>
+        <li><span>Добавлен Ичиго</span> - <span>21.12.2022</span></li>
+        <li><span>Куплено 52 килограмма клубники</span> - <span>11.12.2022</span></li>
+        <li>
+          <span
+            >Андрей погладил собаку. Собака погладила Андрея. Андрей погладил собаку. Собака
+            погладила Андрея.Андрей погладил собаку. Собака погладила Андрея.Андрей погладил собаку.
+            Собака погладила Андрея.Андрей погладил собаку. Собака погладила Андрея.Андрей погладил
+            собаку. Собака погладила Андрея.Андрей погладил собаку. Собака погладила Андрея.</span
+          >
+          - <span>21.12.2022</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.info-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+
+  h1 {
+    font-size: 4rem;
+  }
+
+  .news {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      li {
+        position: relative;
+
+        &::before {
+          content: '';
+          width: 100%;
+          height: 100%;
+          background-color: var(--font-orange);
+          filter: blur(0.2rem);
+          margin-right: 1rem;
+          position: absolute;
+          left: 0;
+          opacity: 0.2;
+          z-index: -1;
+        }
+      }
+    }
+  }
+
+  hr {
+    width: 100%;
+    border: none;
+    height: 0.1rem;
+    background-color: var(--font-orange);
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+</style>
