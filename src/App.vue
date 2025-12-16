@@ -16,11 +16,16 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
       class="bg-video"
       autoplay
       loop
-      disablepictureinpicture=""
+      muted
+      playsinline
+      preload="auto"
+      type="video/mp4"
+      webkit-playsinline
       poster="/src/media/images/bg-static.png"
       src="/src/media/video/bg-video.mp4"
     ></video>
     <div class="vignette"></div>
+    <img class="bg-image-character" src="/src/media/images/ichigo-bankai-full.png" />
     <img class="mask" src="/src/media/images/mask-black.png" />
   </div>
 </template>
@@ -65,6 +70,17 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
     mask-composite: exclude;
     -webkit-mask-composite: xor;
   }
+  &::after {
+    backdrop-filter: blur(0.5rem);
+    /* background-color: #000; */
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -4;
+  }
 }
 
 .background {
@@ -73,7 +89,7 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -5;
+  z-index: -10;
 
   .vignette {
     position: fixed;
@@ -90,6 +106,7 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: -10;
   }
 }
 </style>

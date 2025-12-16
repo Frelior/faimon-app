@@ -42,8 +42,6 @@
         </li>
       </ul>
     </div>
-
-    <img class="bg-image-character" src="/src/media/images/ichigo-bankai-full.png" />
   </div>
 </template>
 
