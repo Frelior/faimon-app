@@ -34,8 +34,7 @@
       </ul>
     </div>
 
-    <img class="image" src="/src/media/images/ichigo-bankai-full.png" />
-    <img class="image mask" src="/src/media/images/mask-black.png" />
+    <img class="bg-image-character" src="/src/media/images/ichigo-bankai-full.png" />
   </div>
 </template>
 
@@ -55,27 +54,6 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .image {
-    opacity: 0.8;
-    z-index: -1;
-    position: fixed;
-    right: 30%;
-    bottom: 0%;
-    transform: translateX(50%);
-    width: 60%;
-    user-select: none;
-    pointer-events: none;
-
-    /* outline: 1px solid white; */
-
-    &.mask {
-      width: 100%;
-      left: 0;
-      transform: translateX(0%);
-      right: auto;
-    }
   }
 }
 </style>
