@@ -4,9 +4,9 @@ import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const menuItems = [
-  { label: 'Главная', to: '/home' },
   { label: 'Персонажи', to: '/characters' },
   { label: 'Тир-лист', to: '/tierlist' },
+  { label: 'Инфо', to: '/info' },
 ]
 const activeIndex = ref(0)
 const itemRefs = ref<(HTMLElement | null)[]>([])
@@ -78,7 +78,7 @@ onMounted(() => {
 .menu-component {
   position: absolute;
   right: 0;
-  top: 2rem;
+  top: 0rem;
   display: flex;
   flex-direction: column;
   /* outline: 1px solid white; */

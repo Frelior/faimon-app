@@ -13,10 +13,11 @@ html {
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 body {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   width: 100%;
   height: 100vh;
   position: relative;
@@ -32,7 +33,10 @@ body {
   padding: 0 2rem;
   position: relative;
 }
+
 .view-container {
+  min-height: 800px;
+
   /* outline: 1px solid white; */
 }
 
@@ -41,15 +45,16 @@ body {
 }
 
 .main-window {
-  width: 80%;
+  width: 70%;
   height: 100%;
   flex-grow: 1;
   /* outline: 1px solid white; */
   padding: 1rem;
   margin-right: auto;
+  position: relative;
 
   border-inline-end: 3px solid;
   border-block-start: 3px solid;
-  border-image-source: radial-gradient(circle at top right, var(--border-gray), transparent 50%);
+  border-image-source: radial-gradient(circle at top right, var(--font-orange), transparent 40%);
   border-image-slice: 1;
 }
