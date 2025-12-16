@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   width: 100%;
   height: 100vh;
   position: relative;
@@ -52,20 +52,23 @@ body {
   bottom: 0;
   right: 0;
   width: 60vw;
-  opacity: 0.6;
+  /* opacity: 0.6; */
   filter: brightness(0.8);
   /* height: 100%; */
   z-index: -2;
   object-fit: cover;
   pointer-events: none;
   user-select: none;
+
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 15%, #000 50%, transparent 70%);
+  mask-image: radial-gradient(ellipse at center, #000 15%, #000 50%, transparent 70%);
 }
 .mask {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  opacity: 0.6;
+  /* opacity: 0.6; */
   z-index: -1;
   object-fit: cover;
   pointer-events: none;

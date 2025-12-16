@@ -11,7 +11,18 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
       <router-view />
     </div>
   </div>
-  <img class="mask" src="/src/media/images/mask-black.png" />
+  <div class="background">
+    <video
+      class="bg-video"
+      autoplay
+      loop
+      disablepictureinpicture=""
+      poster="/src/media/images/bg-static.png"
+      src="/src/media/video/bg-video.mp4"
+    ></video>
+    <div class="vignette"></div>
+    <img class="mask" src="/src/media/images/mask-black.png" />
+  </div>
 </template>
 
 <style scoped>
@@ -53,6 +64,32 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
       linear-gradient(#000 0 0);
     mask-composite: exclude;
     -webkit-mask-composite: xor;
+  }
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+
+  .vignette {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+  }
+  .bg-video {
+    user-select: none;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 </style>
