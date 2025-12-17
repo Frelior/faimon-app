@@ -1,32 +1,17 @@
 <script lang="ts" setup>
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
+import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
 </script>
 
 <template>
+  <BackgroundComponent />
   <HeaderComponent />
   <div class="container">
     <MenuComponent />
     <div class="main-window">
       <router-view />
     </div>
-  </div>
-  <div class="background">
-    <video
-      class="bg-video"
-      autoplay
-      loop
-      muted
-      playsinline
-      preload="auto"
-      type="video/mp4"
-      webkit-playsinline
-      poster="/src/media/images/bg-static.png"
-      src="/src/media/video/bg-video.mp4"
-    ></video>
-    <div class="vignette"></div>
-    <img class="bg-image-character" src="/src/media/images/ichigo-bankai-full.png" />
-    <img class="mask" src="/src/media/images/mask-black.png" />
   </div>
 </template>
 
@@ -80,33 +65,6 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
     top: 0;
     left: 0;
     z-index: -4;
-  }
-}
-
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -10;
-
-  .vignette {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
-  }
-  .bg-video {
-    user-select: none;
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -10;
   }
 }
 </style>
