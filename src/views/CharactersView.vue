@@ -1,7 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>Characters</div>
+  <div class="characters-view view-container">Characters</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.characters-view {
+  background-color: rgb(134, 92, 0);
+
+}
+</style>
