@@ -131,6 +131,10 @@
       li {
         position: relative;
 
+        & span {
+          text-shadow: 0 0 1rem black;
+        }
+
         &::before {
           content: '';
           width: 100%;

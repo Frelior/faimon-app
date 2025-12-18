@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { computed, watch, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 const router = useRoute()
-const currentPage = computed(() => router.name)
-const isCharactersPage = ref(true)
+const isMounted = ref(false)
+const isCharactersPage = computed(() => router.name === 'characters')
 
-watch(currentPage, () => {
-  isCharactersPage.value = currentPage.value === 'characters'
+onMounted(() => {
+  isMounted.value = true
 })
 </script>
 
 <template>
   <Transition name="fade">
     <img
-      v-show="!isCharactersPage"
+      v-show="isMounted && !isCharactersPage"
       class="bg-image-character"
       src="/src/media/images/ichigo-bankai-full.png"
   /></Transition>
