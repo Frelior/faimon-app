@@ -19,7 +19,6 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
 .main-window {
   width: 70%;
   height: 90%;
-  padding: 3rem;
   margin-right: auto;
   position: relative;
   overflow: hidden;
