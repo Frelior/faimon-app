@@ -11,14 +11,16 @@
   --width: 15rem;
   --height: 15rem;
   --border-width: 0.5rem;
-  border: var(--border-width) solid transparent;
+
+  /* border: var(--border-width) solid transparent; */
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 
   padding: var(--border-width);
   background: linear-gradient(grey, lightgrey);
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   width: var(--width);
   height: var(--height);
-  transform: rotateZ(45deg) scale(0.7);
+  /* transform: scale(0.7); */
   transition: transform 0.2s;
   position: relative;
   cursor: pointer;
@@ -28,11 +30,13 @@
   justify-content: center;
   align-items: center;
 
+
+
   &:hover {
-    transform: rotateZ(45deg) scale(1.2);
+    transform: scale(1.2);
     transition: transform 0.2s;
     z-index: 10;
-    background: linear-gradient(rgb(32, 32, 32), var(--font-orange));
+    background: linear-gradient(250deg, var(--font-orange), rgb(32, 32, 32));
   }
 
   &:before {
@@ -45,19 +49,19 @@
     top: -35%;
     left: 0;
     z-index: 1;
-    transform: rotate(0deg);
+    transform: rotate(45deg);
     transition: transform 0.2s;
   }
 
   &:hover:before {
-    transform: translate(-100px, 400%) rotate(0deg);
+    transform: translate(-100px, 400%) rotate(45deg);
     transition: transform 0.2s;
   }
   img {
-    width: 150%;
-    height: 150%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transform: rotateZ(-45deg);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   }
 }
 </style>
