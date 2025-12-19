@@ -27,6 +27,7 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
   margin-right: auto;
   position: relative;
   overflow: hidden;
+  transition: all 0.5s ease;
 
   .fade-enter-active,
   .fade-leave-active {
