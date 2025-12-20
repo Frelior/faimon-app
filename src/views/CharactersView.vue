@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CharacterHexagonComponent from '@/components/CharacterHexagonComponent/CharacterHexagonComponent.vue'
-import { useHoveredCharacterIdStore } from '@/stores/characterStore'
+import { useCharactersStore } from '@/stores/characterStore'
 const characters = [
   {
     id: 1,
@@ -71,7 +71,7 @@ const characters = [
     name: 'kaname',
   },
 ]
-const charactersIdStore = useHoveredCharacterIdStore()
+const charactersStore = useCharactersStore()
 </script>
 
 <template>
@@ -81,7 +81,7 @@ const charactersIdStore = useHoveredCharacterIdStore()
       :key="character.id"
       :character="character"
       class="characters-view__item"
-      @mouseenter="charactersIdStore.changeCurrentId(character.id)"
+      @mouseenter="charactersStore.changeCurrentCharacterId(character.id)"
     />
   </div>
 </template>
@@ -89,7 +89,6 @@ const charactersIdStore = useHoveredCharacterIdStore()
 <style scoped>
 .characters-view {
   --size: 7.5rem;
-
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(12, var(--size));

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { ref, onMounted, computed } from 'vue'
-import { useHoveredCharacterIdStore } from '@/stores/characterStore'
+import { useCharactersStore } from '@/stores/characterStore'
 
 const route = useRoute()
-const hoveredStore = useHoveredCharacterIdStore()
+const hoveredStore = useCharactersStore()
 
 const imageLink = computed(() => {
   return route.name === 'character'
     ? `/src/media/images/charactersBig/character-fhd-${route.params.id}.png`
-    : `/src/media/images/charactersBig/character-fhd-${hoveredStore.characterId}.png`
+    : `/src/media/images/charactersBig/character-fhd-${hoveredStore.currentCharacterId}.png`
 })
 const isMounted = ref(false)
 onMounted(() => {
@@ -21,7 +21,7 @@ onMounted(() => {
   <div class="img-wrapper bg-image-character">
     <Transition name="fast-fade" mode="out-in">
       <img
-        :key="hoveredStore.characterId"
+        :key="hoveredStore.currentCharacterId"
         :src="imageLink"
         :class="{ clear: route.name === 'characters' || route.name === 'character' }"
       />
@@ -37,7 +37,6 @@ onMounted(() => {
   width: 60vw;
   height: 80%;
   z-index: -9;
-
   pointer-events: none;
   user-select: none;
   background-color: rgba(255, 255, 255, 0.13);
@@ -46,13 +45,13 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.9);
+    filter: brightness(0.8);
     transition:
       opacity 0.05s ease-out,
       filter 0.05s ease-out;
 
     &.clear {
-      filter: brightness(1.2);
+      filter: brightness(1);
     }
   }
 
