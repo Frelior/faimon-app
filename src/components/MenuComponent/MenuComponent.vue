@@ -53,6 +53,7 @@ onBeforeUnmount(() => {
     <div class="menu">
       <ul class="menu-list">
         <RouterLink
+          tabindex="1"
           v-for="(item, index) in menuItems"
           :key="item.to"
           :to="item.to"

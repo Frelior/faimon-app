@@ -6,9 +6,9 @@ import TelegramFilled from '@vicons/material/TelegramFilled'
 
 <template>
   <div class="social-links">
-    <a href="" target="_blank"> <DiscordFilled /></a>
-    <a href="" target="_blank"> <YoutubeFilled /></a>
-    <a href="" target="_blank"> <TelegramFilled /></a>
+    <a href="" target="_blank" tabindex="0"> <DiscordFilled /></a>
+    <a href="" target="_blank" tabindex="0"> <YoutubeFilled /></a>
+    <a href="" target="_blank" tabindex="0"> <TelegramFilled /></a>
   </div>
 </template>
 

@@ -8,8 +8,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="border">
-    <img :src="character.iconSrc" id="clipped" />
+  <div class="border" tabindex="0">
+    <img
+      :src="`/src/media/images/characterIcons/character-icon-${character.id}.png`"
+      id="clipped"
+    />
   </div>
 </template>
 
@@ -18,7 +21,6 @@ defineProps({
   --width: 15rem;
   --height: 15rem;
   --border-width: 0.5rem;
-
   /* border: var(--border-width) solid transparent; */
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 
@@ -36,7 +38,8 @@ defineProps({
   justify-content: center;
   align-items: center;
 
-  &:hover {
+  &:hover,
+  &:focus {
     transform: scale(1.2);
     transition: transform 0.2s;
     z-index: 10;
@@ -58,7 +61,8 @@ defineProps({
     transition: transform 0.2s;
   }
 
-  &:hover:before {
+  &:hover:before,
+  &:focus:before {
     transform: translate(-10rem, 400%) rotate(45deg);
     transition: transform 0.2s;
   }

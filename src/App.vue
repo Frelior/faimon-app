@@ -11,9 +11,11 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
     <MenuComponent />
     <Transition> </Transition>
     <div class="main-window">
-      <transition name="fade" mode="out-in">
-        <router-view />
-      </transition>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>
@@ -27,11 +29,10 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
   margin-right: auto;
   position: relative;
   overflow: hidden;
-  transition: all 0.5s ease;
 
   .fade-enter-active,
   .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.1s ease;
   }
 
   .fade-enter-from,
