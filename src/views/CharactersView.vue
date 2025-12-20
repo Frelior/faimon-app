@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import CharacterHexagonComponent from '@/components/CharacterHexagonComponent/CharacterHexagonComponent.vue'
-import { useHoveredCharacterIdStore } from '@/stores/counter.ts'
-import { onUnmounted } from 'vue'
+import { useHoveredCharacterIdStore } from '@/stores/characterStore'
 const characters = [
   {
     id: 1,
@@ -73,10 +72,6 @@ const characters = [
   },
 ]
 const charactersIdStore = useHoveredCharacterIdStore()
-
-onUnmounted(() => {
-  charactersIdStore.changeCurrentId(0)
-})
 </script>
 
 <template>

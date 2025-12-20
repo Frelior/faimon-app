@@ -1,51 +1,26 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { computed, ref, onMounted } from 'vue'
-import { useHoveredCharacterIdStore } from '@/stores/counter.ts'
+import { ref, onMounted } from 'vue'
+import { useHoveredCharacterIdStore } from '@/stores/characterStore'
 
 const route = useRoute()
 const hoveredStore = useHoveredCharacterIdStore()
 
 const isMounted = ref(false)
 onMounted(() => (isMounted.value = true))
-
-function randomInt(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
-const initialRandomNumber = randomInt(1, 17)
-
-const imageSrc = computed(() => {
-  if (!isMounted.value) return null
-
-  if (route.name === 'characters' && hoveredStore.characterId) {
-    return `/src/media/images/charactersBig/character-fhd-${hoveredStore.characterId}.png`
-  }
-
-  return `/src/media/images/charactersBig/character-fhd-${initialRandomNumber}.png`
-})
-
-const imageKey = computed(() => {
-  if (route.name === 'characters') {
-    return `char-${hoveredStore.characterId}`
-  }
-  return `random-${initialRandomNumber}`
-})
 </script>
 
-
 <template>
-  <div class="img-wrapper bg-image-character" v-if="imageSrc">
+  <div class="img-wrapper bg-image-character">
     <Transition name="fast-fade" mode="out-in">
       <img
-        :key="imageKey"
-        :src="imageSrc"
+        :key="hoveredStore.characterId"
+        :src="`/src/media/images/charactersBig/character-fhd-${hoveredStore.characterId}.png`"
         :class="{ clear: route.name === 'characters' }"
       />
     </Transition>
   </div>
 </template>
-
 
 <style scoped>
 .bg-image-character {
@@ -65,6 +40,9 @@ const imageKey = computed(() => {
     height: 100%;
     object-fit: cover;
     filter: brightness(0.9);
+    transition:
+      opacity 0.05s ease-out,
+      filter 0.05s ease-out;
 
     &.clear {
       filter: brightness(1.2);
@@ -82,18 +60,9 @@ const imageKey = computed(() => {
     transparent 71%
   );
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease-out;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 
 .fast-fade-enter-active,
 .fast-fade-leave-active {
-  transition: opacity 0.1s ease-out;
 }
 .fast-fade-enter-from,
 .fast-fade-leave-to {
