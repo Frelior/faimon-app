@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 defineProps({
   character: {
     type: Object,
@@ -8,35 +9,49 @@ defineProps({
 </script>
 
 <template>
-  <div class="border" tabindex="0">
-    <img
-      :src="`/src/media/images/characterIcons/character-icon-${character.id}.png`"
-      id="clipped"
-    />
+  <div class="border" draggable="false">
+    <RouterLink
+      :to="`/characters/${character.id}`"
+      tabindex="0"
+      class="router-link"
+      draggable="false"
+    >
+      <img
+        draggable="false"
+        :src="`/src/media/images/characterIcons/character-icon-${character.id}.png`"
+        id="clipped"
+      />
+    </RouterLink>
   </div>
 </template>
 
 <style scoped>
+.router-link {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  user-select: none;
+
+}
 .border {
   --width: 15rem;
   --height: 15rem;
   --border-width: 0.5rem;
-  /* border: var(--border-width) solid transparent; */
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 
   padding: var(--border-width);
   background: linear-gradient(250deg, rgb(201, 201, 201), rgb(20, 20, 20));
   width: var(--width);
   height: var(--height);
-  /* transform: scale(0.7); */
   transition: transform 0.2s;
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  /* will-change: transform; */
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 
   &:hover,
   &:focus {
@@ -71,6 +86,7 @@ defineProps({
     height: 100%;
     object-fit: contain;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    user-select: none;
   }
 }
 </style>

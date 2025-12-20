@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useHoveredCharacterIdStore } from '@/stores/characterStore'
 
 const route = useRoute()
 const hoveredStore = useHoveredCharacterIdStore()
 
+const imageLink = computed(() => {
+  return route.name === 'character'
+    ? `/src/media/images/charactersBig/character-fhd-${route.params.id}.png`
+    : `/src/media/images/charactersBig/character-fhd-${hoveredStore.characterId}.png`
+})
 const isMounted = ref(false)
-onMounted(() => (isMounted.value = true))
+onMounted(() => {
+  isMounted.value = true
+})
 </script>
 
 <template>
@@ -15,8 +22,8 @@ onMounted(() => (isMounted.value = true))
     <Transition name="fast-fade" mode="out-in">
       <img
         :key="hoveredStore.characterId"
-        :src="`/src/media/images/charactersBig/character-fhd-${hoveredStore.characterId}.png`"
-        :class="{ clear: route.name === 'characters' }"
+        :src="imageLink"
+        :class="{ clear: route.name === 'characters' || route.name === 'character' }"
       />
     </Transition>
   </div>
