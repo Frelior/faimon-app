@@ -9,21 +9,36 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
   <HeaderComponent />
   <div class="container">
     <MenuComponent />
+    <Transition> </Transition>
     <div class="main-window">
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>
 
 <style scoped>
 .main-window {
-  width: 70%;
+  max-width: 70%;
+  min-width: 40%;
+  width: fit-content;
   height: 90%;
-  flex-grow: 1;
-  padding: 3rem;
   margin-right: auto;
   position: relative;
   overflow: hidden;
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.1s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
 
   &::before {
     content: '';

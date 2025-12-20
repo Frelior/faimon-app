@@ -10,3 +10,12 @@ export const useCounterStore = defineStore('counter', () => {
 
   return { count, doubleCount, increment }
 })
+
+export const useHoveredCharacterIdStore = defineStore('hoveredCharacterId', () => {
+  const characterId = ref(0)
+  function changeCurrentId(newValue: number) {
+    characterId.value = newValue
+  }
+
+  return { characterId, changeCurrentId }
+})
