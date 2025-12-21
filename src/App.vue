@@ -2,6 +2,7 @@
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
+import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 </script>
@@ -19,7 +20,12 @@ const route = useRoute()
       </router-view>
     </div>
     <transition name="fade-slow">
-      <div v-if="route.name === 'characters'" class="character-preview">ICHIGO</div>
+      <div
+        v-if="route.name === 'characters' || route.name === 'character'"
+        class="character-preview-box"
+      >
+        <CharacterPreviewComponent />
+      </div>
     </transition>
   </div>
 </template>
@@ -30,8 +36,8 @@ const route = useRoute()
 
   .main-window {
     max-width: 70%;
-    min-width: 40%;
-    width: fit-content;
+    min-width: 60%;
+    width: min-content;
     height: 90%;
     position: relative;
     overflow: hidden;
@@ -78,10 +84,16 @@ const route = useRoute()
       z-index: -4;
     }
   }
-  .character-preview {
-    border: 1px solid white;
-
+  .character-preview-box {
+    /* border: 1px solid white; */
     flex-grow: 1;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 8rem;
+    pointer-events: none;
+    user-select: none;
   }
 
   .fade-enter-active,

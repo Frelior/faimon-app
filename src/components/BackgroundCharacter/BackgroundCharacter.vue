@@ -55,7 +55,6 @@ onMounted(() => {
     }
   }
 
-  /* mask-image: radial-gradient(ellipse at bottom right, #000 15%, #000 50%, transparent 70%); */
   mask-image: radial-gradient(
     ellipse at 70% 80%,
     black 10%,

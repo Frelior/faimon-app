@@ -9,13 +9,8 @@ defineProps({
 </script>
 
 <template>
-  <div class="border" draggable="false">
-    <RouterLink
-      :to="`/characters/${character.id}`"
-      tabindex="0"
-      class="router-link"
-      draggable="false"
-    >
+  <div class="border" draggable="false" tabindex="0">
+    <RouterLink :to="`/characters/${character.id}`" class="router-link" draggable="false">
       <img
         draggable="false"
         :src="`/src/media/images/characterIcons/character-icon-${character.id}.png`"
@@ -32,7 +27,6 @@ defineProps({
   object-fit: contain;
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
   user-select: none;
-
 }
 .border {
   --width: 15rem;

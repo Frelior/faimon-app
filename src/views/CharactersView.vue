@@ -82,6 +82,7 @@ const charactersStore = useCharactersStore()
       :character="character"
       class="characters-view__item"
       @mouseenter="charactersStore.changeCurrentCharacterId(character.id)"
+      @focus="charactersStore.changeCurrentCharacterId(character.id)"
     />
   </div>
 </template>
