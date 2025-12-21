@@ -35,9 +35,7 @@ const route = useRoute()
   display: flex;
 
   .main-window {
-    max-width: 70%;
-    min-width: 60%;
-    width: min-content;
+    width: 60%;
     height: 90%;
     position: relative;
     overflow: hidden;

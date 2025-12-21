@@ -82,6 +82,15 @@ a {
   }
 }
 
+.styled-title {
+  text-align: center;
+  font-family: Unbounded;
+  font-size: 3rem;
+  background: linear-gradient(to top, white 7%, var(--font-orange) 40%);
+  background-clip: text;
+  color: transparent;
+}
+
 @keyframes border-flow {
   0% {
     background-position: 0% 50%;

@@ -19,7 +19,7 @@ const type = computed(() => characterObject.value!.type)
   <div class="character-preview">
     <div class="bg"></div>
     <div class="title">
-      <h3>{{ characterObject?.name }}</h3>
+      <h3 class="styled-title">{{ characterObject?.name }}</h3>
     </div>
     <div class="tags">
       <p class="tag" :class="rarity" v-if="rarity">{{ rarity.toUpperCase() }}</p>
@@ -55,14 +55,6 @@ const type = computed(() => characterObject.value!.type)
     display: flex;
     align-items: center;
     position: relative;
-
-    h3 {
-      font-family: Unbounded;
-      font-size: 4rem;
-      background: linear-gradient(to top, white 10%, var(--font-orange) 40%);
-      background-clip: text;
-      color: transparent;
-    }
   }
 
   .tags {

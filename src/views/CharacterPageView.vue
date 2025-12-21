@@ -1,13 +1,143 @@
 <script setup lang="ts">
+import { useCharactersStore } from '@/stores/characterStore'
+import type { Character } from '@/interfaces/interfaces'
+import { computed } from 'vue'
 const props = defineProps<{
   id: string
 }>()
+const characterStore = useCharactersStore()
+characterStore.changeCurrentCharacterId(Number(props.id))
 
-const characterId = Number(props.id)
+const character = computed(
+  () => characterStore.findCharacterById(characterStore.currentCharacterId) as Character,
+)
 </script>
 
 <template>
-  <div class="view-container">CharacterPage {{ characterId }}</div>
+  <div class="view-container character-page">
+    <div class="header">
+      <h2 class="styled-title">{{ character.name }}</h2>
+    </div>
+    <div class="body">
+      <div class="info-block">
+        <p class="block-title">Passive skills:</p>
+        <div class="block-skill">
+          <img src="" class="block-skill-image" />
+          <div class="block-text">
+            <p class="skill-title">Getsuga</p>
+            <p class="skill-desc">
+              Special attacks prioritize enemies inflicted with Getsuga Mark.
+            </p>
+          </div>
+        </div>
+        <div class="block-skill">
+          <img src="" class="block-skill-image" />
+          <div class="block-text">
+            <p class="skill-title">Hollow mask</p>
+            <p class="skill-desc">
+              In the state [Hollow], - Every time a special attack is launched, the damage of the
+              next Ultimate [Kuroi Getsuga Tensho] will increase in [15%], This effect can be
+              accumulated up to 4 times.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="info-block">
+        <p class="block-title">Passive skills:</p>
+        <div class="block-skill">
+          <img src="" class="block-skill-image" />
+          <div class="block-text">
+            <p class="skill-title">Getsuga</p>
+            <p class="skill-desc">
+              Special attacks prioritize enemies inflicted with Getsuga Mark.
+            </p>
+          </div>
+        </div>
+        <div class="block-skill">
+          <img src="" class="block-skill-image" />
+          <div class="block-text">
+            <p class="skill-title">Hollow mask</p>
+            <p class="skill-desc">
+              In the state [Hollow], - Every time a special attack is launched, the damage of the
+              next Ultimate [Kuroi Getsuga Tensho] will increase in [15%], This effect can be
+              accumulated up to 4 times.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="info-block">
+        <p class="block-title">Passive skills:</p>
+        <div class="block-skill">
+          <img src="" class="block-skill-image" />
+          <div class="block-text">
+            <p class="skill-title">Getsuga</p>
+            <p class="skill-desc">
+              Special attacks prioritize enemies inflicted with Getsuga Mark.
+            </p>
+          </div>
+        </div>
+        <div class="block-skill">
+          <img src="" class="block-skill-image" />
+          <div class="block-text">
+            <p class="skill-title">Hollow mask</p>
+            <p class="skill-desc">
+              In the state [Hollow], - Every time a special attack is launched, the damage of the
+              next Ultimate [Kuroi Getsuga Tensho] will increase in [15%], This effect can be
+              accumulated up to 4 times.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.character-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+    /* border: 0.1rem solid rgb(161, 0, 0); */
+
+    .info-block {
+      padding: 0rem 0rem;
+      border: 0.3rem solid var(--border-gray);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      /* gap: 2rem; */
+
+      .block-title {
+        align-self: center;
+        font-size: 2rem;
+        border-bottom: 0.3rem solid var(--border-gray);
+        background-color: var(--border-gray);
+        text-align: center;
+        width: 100%;
+      }
+
+      .block-skill {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: 0.3rem solid var(--border-gray);
+        padding: 1rem 1rem 1rem 1rem;
+
+        .block-skill-image {
+          width: 7rem;
+          height: 7rem;
+        }
+      }
+    }
+  }
+}
+</style>
