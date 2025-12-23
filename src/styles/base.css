@@ -50,6 +50,47 @@ body {
   margin: 0 auto;
 }
 
+a {
+  color: var(--font-orange);
+  text-decoration: none;
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 400;
+  transition:
+    transform 0.2s ease,
+    font-variation-settings 0.2s ease,
+    opacity 0.2s ease;
+
+  font-size: 2.5rem;
+  opacity: 0.9;
+  line-height: 5rem;
+  text-align: right;
+  margin-right: 1rem;
+  cursor: pointer;
+  transform-origin: right center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  &.active {
+    transform: scale(1.4);
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  &:hover {
+    text-shadow: 0 0 1px var(--font-orange);
+  }
+}
+
+.styled-title {
+  text-align: center;
+  font-family: Unbounded;
+  font-size: 3rem;
+  background: linear-gradient(to top, white 7%, var(--font-orange) 40%);
+  background-clip: text;
+  color: transparent;
+}
+
 @keyframes border-flow {
   0% {
     background-position: 0% 50%;

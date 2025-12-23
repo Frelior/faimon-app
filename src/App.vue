@@ -2,6 +2,12 @@
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
+import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
+import { useCharactersStore } from './stores/characterStore'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const characetrStore = useCharactersStore()
+characetrStore.fetchAllCharacters()
 </script>
 
 <template>
@@ -9,7 +15,6 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
   <HeaderComponent />
   <div class="container">
     <MenuComponent />
-    <Transition> </Transition>
     <div class="main-window">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -17,69 +22,94 @@ import BackgroundComponent from './components/BackgroundComponent/BackgroundComp
         </transition>
       </router-view>
     </div>
+    <transition name="fade-slow">
+      <div
+        v-if="route.name === 'characters' || route.name === 'character'"
+        class="character-preview-box"
+      >
+        <CharacterPreviewComponent />
+      </div>
+    </transition>
   </div>
 </template>
 
 <style scoped>
-.main-window {
-  max-width: 70%;
-  min-width: 40%;
-  width: fit-content;
-  height: 90%;
-  margin-right: auto;
-  position: relative;
-  overflow: hidden;
+.container {
+  display: flex;
+
+  .main-window {
+    width: 60%;
+    height: 90%;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 0.4rem; /* толщина бордера */
+      pointer-events: none;
+
+      background: linear-gradient(
+        45deg,
+        var(--font-gray),
+        var(--font-gray),
+        transparent,
+        transparent,
+        var(--font-orange),
+        transparent,
+        transparent,
+        var(--font-gray),
+        transparent,
+        transparent,
+        var(--font-orange),
+        var(--font-orange)
+      );
+      background-size: 200% 200%;
+      animation: border-flow 60s ease-in-out infinite;
+      mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: xor;
+    }
+    &::after {
+      backdrop-filter: blur(0.5rem);
+      /* background-color: #000; */
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -4;
+    }
+  }
+  .character-preview-box {
+    /* border: 1px solid white; */
+    flex-grow: 1;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 8rem;
+    pointer-events: none;
+    user-select: none;
+  }
 
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity 0.1s ease;
   }
-
+  .fade-slow-enter-active,
+  .fade-slow-leave-active {
+    transition: opacity 0.5s ease;
+  }
   .fade-enter-from,
-  .fade-leave-to {
+  .fade-leave-to,
+  .fade-slow-enter-from,
+  .fade-slow-leave-to {
     opacity: 0;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 0.4rem; /* толщина бордера */
-    pointer-events: none;
-
-    background: linear-gradient(
-      45deg,
-      var(--font-gray),
-      var(--font-gray),
-      transparent,
-      transparent,
-      var(--font-orange),
-      transparent,
-      transparent,
-      var(--font-gray),
-      transparent,
-      transparent,
-      var(--font-orange),
-      var(--font-orange)
-    );
-    background-size: 200% 200%;
-    animation: border-flow 60s ease-in-out infinite;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: xor;
-  }
-  &::after {
-    backdrop-filter: blur(0.5rem);
-    /* background-color: #000; */
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -4;
   }
 }
 </style>

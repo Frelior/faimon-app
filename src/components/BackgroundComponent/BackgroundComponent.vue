@@ -32,6 +32,7 @@ import BackgroundCharacter from '../BackgroundCharacter/BackgroundCharacter.vue'
   z-index: -10;
 
   .vignette {
+    z-index: -10;
     position: fixed;
     width: 100%;
     height: 100%;
