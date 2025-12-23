@@ -3,8 +3,11 @@ import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
 import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
+import { useCharactersStore } from './stores/characterStore'
 import { useRoute } from 'vue-router'
 const route = useRoute()
+const characetrStore = useCharactersStore()
+characetrStore.fetchAllCharacters()
 </script>
 
 <template>

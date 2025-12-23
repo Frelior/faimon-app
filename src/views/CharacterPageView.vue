@@ -136,6 +136,16 @@ const character = computed(
           width: 7rem;
           height: 7rem;
         }
+        .block-text {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          .skill-title {
+            font-size: 1.8rem;
+            .skill-desc {
+            }
+          }
+        }
       }
     }
   }

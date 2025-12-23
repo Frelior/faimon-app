@@ -1,22 +1,24 @@
 <script setup lang="ts">
+import LoadingComponent from '../LoadingComponent/LoadingComponent.vue'
 import { useCharactersStore } from '@/stores/characterStore'
 import { computed } from 'vue'
 const characterStore = useCharactersStore()
-const characterObject = computed(() =>
-  characterStore.findCharacterById(characterStore.currentCharacterId),
-)
+const characterObject = computed(() => {
+  return characterStore.findCharacterById(characterStore.currentCharacterId)
+})
 function capitalizeFirstLetterTrimmed(str: string): string {
   const trimmed = str.trimStart()
   if (!trimmed) return str
   return trimmed.charAt(0).toUpperCase() + trimmed.slice(1)
 }
+
 const rarity = computed(() => characterObject.value!.rarity)
 const role = computed(() => characterObject.value!.role)
 const type = computed(() => characterObject.value!.type)
 </script>
 
 <template>
-  <div class="character-preview">
+  <div v-if="characterObject" class="character-preview">
     <div class="bg"></div>
     <div class="title">
       <h3 class="styled-title">{{ characterObject?.name }}</h3>
@@ -31,6 +33,7 @@ const type = computed(() => characterObject.value!.type)
       </p>
     </div>
   </div>
+  <div v-else><LoadingComponent /></div>
 </template>
 
 <style scoped>
