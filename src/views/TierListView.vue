@@ -1,7 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>Tierlist</div>
+  <div class="info-view view-container">
+    <p>tierlist</p>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.info-view {
+}
+</style>
