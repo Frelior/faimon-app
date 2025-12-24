@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick, watch, onBeforeUnmount } from 'vue'
+import { ref,  nextTick, watch, onBeforeUnmount } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
 const route = useRoute()
