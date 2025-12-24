@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
@@ -8,29 +10,33 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const characetrStore = useCharactersStore()
 characetrStore.fetchAllCharacters()
+const isCharactersDownloaded = computed(() => characetrStore.characters.length > 0)
 </script>
 
 <template>
-  <BackgroundComponent />
-  <HeaderComponent />
-  <div class="container">
-    <MenuComponent />
-    <div class="main-window">
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </div>
-    <transition name="fade-slow">
-      <div
-        v-if="route.name === 'characters' || route.name === 'character'"
-        class="character-preview-box"
-      >
-        <CharacterPreviewComponent />
+  <template v-if="isCharactersDownloaded">
+    <BackgroundComponent />
+    <HeaderComponent />
+    <div class="container">
+      <MenuComponent />
+      <div class="main-window">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </div>
-    </transition>
-  </div>
+      <transition name="fade-slow">
+        <div
+          v-if="route.name === 'characters' || route.name === 'character'"
+          class="character-preview-box"
+        >
+          <CharacterPreviewComponent />
+        </div>
+      </transition>
+    </div>
+  </template>
+  <div v-else><LoadingComponent fullscreen/></div>
 </template>
 
 <style scoped>
@@ -42,6 +48,7 @@ characetrStore.fetchAllCharacters()
     height: 90%;
     position: relative;
     overflow: hidden;
+    align-self: flex-start;
 
     &::before {
       content: '';
