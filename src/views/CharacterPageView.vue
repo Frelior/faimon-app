@@ -19,6 +19,47 @@ const character = computed(
       <h2 class="styled-title">{{ character.name }}</h2>
     </div>
     <div class="body">
+      <div class="info-block base-stats">
+        <p class="block-title">Base stats:</p>
+
+        <div class="block-content">
+          <div class="block-skill">
+            <div class="block-text">
+              <p class="skill-title">Attack</p>
+              <p class="skill-desc">142</p>
+            </div>
+          </div>
+
+          <div class="block-skill">
+            <div class="block-text">
+              <p class="skill-title">Defence</p>
+              <p class="skill-desc">228</p>
+            </div>
+          </div>
+
+          <div class="block-skill">
+            <div class="block-text">
+              <p class="skill-title">HP</p>
+              <p class="skill-desc">3421</p>
+            </div>
+          </div>
+
+          <div class="block-skill">
+            <div class="block-text">
+              <p class="skill-title">Crit damage</p>
+              <p class="skill-desc">120%</p>
+            </div>
+          </div>
+
+          <div class="block-skill">
+            <div class="block-text">
+              <p class="skill-title">Crit rate</p>
+              <p class="skill-desc">20%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="info-block">
         <p class="block-title">Passive skills:</p>
         <div class="block-skill">
@@ -103,23 +144,45 @@ const character = computed(
     flex-direction: column;
     width: 100%;
     gap: 2rem;
-    /* border: 0.1rem solid rgb(161, 0, 0); */
 
     .info-block {
       padding: 0rem 0rem;
-      border: 0.3rem solid var(--border-gray);
+      border: 0.3rem solid var(--font-orange-05);
+      border-radius: 0.5rem;
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      /* gap: 2rem; */
+      background-color: rgba(0, 0, 0, 0.781);
+      overflow: hidden;
+
+      &.base-stats {
+        .block-content {
+          .block-skill {
+            .block-text {
+              text-align: center;
+              .skill-title {
+                font-size: 1.5rem;
+              }
+              .skill-desc {
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+      }
+
+      .block-content {
+        width: 100%;
+        display: flex;
+      }
 
       .block-title {
         align-self: center;
         font-size: 2rem;
-        border-bottom: 0.3rem solid var(--border-gray);
-        background-color: var(--border-gray);
+        padding: 0.3rem 0rem;
+        background-color: var(--skills-grid);
         text-align: center;
         width: 100%;
       }
@@ -129,14 +192,20 @@ const character = computed(
         display: flex;
         align-items: center;
         gap: 1rem;
-        border-bottom: 0.3rem solid var(--border-gray);
+        border: 0.3rem solid var(--skills-grid);
         padding: 1rem 1rem 1rem 1rem;
 
         .block-skill-image {
           width: 7rem;
           height: 7rem;
+          border-radius: 50%;
+          border: 0.3rem solid var(--skills-grid);
+          object-fit: cover;
+          object-position: center;
+          background-color: var(--skills-grid);
         }
         .block-text {
+          width: 100%;
           display: flex;
           flex-direction: column;
           gap: 1rem;

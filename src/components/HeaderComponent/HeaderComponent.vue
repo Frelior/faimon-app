@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import SocialLinks from '../SocialLinks/SocialLinks.vue'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <div class="header-component">
     <div class="container">
-      <div class="logo"><img src="/src/media/icons/logo.png" /></div>
+      <RouterLink to="/" class="logo"
+        ><img src="/src/media/icons/logo.png" tabindex="0"
+      /></RouterLink>
       <SocialLinks />
     </div>
   </div>

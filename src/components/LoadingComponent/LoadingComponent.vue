@@ -1,7 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  fullscreen: {
+    type: Boolean,
+    default: false,
+  },
+})
+</script>
 
 <template>
-  <div class="loader"></div>
+  <div v-if="!fullscreen" class="loader"></div>
+  <div v-else class="fullscreen"><div class="loader"></div></div>
 </template>
 
 <style scoped>
@@ -14,6 +22,15 @@
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+}
+
+.fullscreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes rotation {
