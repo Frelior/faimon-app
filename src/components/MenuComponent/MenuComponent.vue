@@ -39,9 +39,9 @@ const onResize = () => {
 
 window.addEventListener('resize', onResize)
 
-onMounted(() => {
-  setActive(0)
-})
+// onMounted(() => {
+//   setActive(0)
+// })
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onResize)
@@ -134,7 +134,7 @@ onBeforeUnmount(() => {
     }
 
     .indicator {
-      margin-top: 2.5rem;
+      margin-top: 2.3rem;
       width: 4rem;
       height: 0.5rem;
       background-color: var(--font-orange);
