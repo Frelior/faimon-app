@@ -36,12 +36,13 @@ const isCharactersDownloaded = computed(() => characetrStore.characters.length >
       </transition>
     </div>
   </template>
-  <div v-else><LoadingComponent fullscreen/></div>
+  <div v-else><LoadingComponent fullscreen /></div>
 </template>
 
 <style scoped>
 .container {
   display: flex;
+  animation: fade-in 1s ease forwards;
 
   .main-window {
     width: 60%;
@@ -49,6 +50,8 @@ const isCharactersDownloaded = computed(() => characetrStore.characters.length >
     position: relative;
     overflow: hidden;
     align-self: flex-start;
+    background-color: rgba(0, 0, 0, 0.397);
+    padding-bottom: 5rem;
 
     &::before {
       content: '';

@@ -144,17 +144,18 @@ const character = computed(
     flex-direction: column;
     width: 100%;
     gap: 2rem;
-    /* border: 0.1rem solid rgb(161, 0, 0); */
 
     .info-block {
       padding: 0rem 0rem;
-      /* border: 0.3rem solid var(--border-gray); */
+      border: 0.3rem solid var(--font-orange-05);
+      border-radius: 0.5rem;
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      /* gap: 2rem; */
+      background-color: rgba(0, 0, 0, 0.781);
+      overflow: hidden;
 
       &.base-stats {
         .block-content {
@@ -181,8 +182,7 @@ const character = computed(
         align-self: center;
         font-size: 2rem;
         padding: 0.3rem 0rem;
-        /* border-bottom: 0.3rem solid var(--border-gray); */
-        background-color: var(--border-gray);
+        background-color: var(--skills-grid);
         text-align: center;
         width: 100%;
       }
@@ -192,17 +192,17 @@ const character = computed(
         display: flex;
         align-items: center;
         gap: 1rem;
-        border: 0.3rem solid var(--border-gray);
+        border: 0.3rem solid var(--skills-grid);
         padding: 1rem 1rem 1rem 1rem;
 
         .block-skill-image {
           width: 7rem;
           height: 7rem;
           border-radius: 50%;
-          border: 0.3rem solid var(--border-gray);
+          border: 0.3rem solid var(--skills-grid);
           object-fit: cover;
           object-position: center;
-          background-color: var(--border-gray);
+          background-color: var(--skills-grid);
         }
         .block-text {
           width: 100%;
