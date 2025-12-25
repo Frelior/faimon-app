@@ -16,3 +16,8 @@ export interface Character {
   crit_damage: number | null
   crit_rate: number | null
 }
+export interface Filters {
+  role: 'assault' | 'support' | 'tactic' | null
+  type: 'slash' | 'strike' | 'thrust' | 'spirit' | null
+  rarity: 'sr' | 'ssr' | null
+}
