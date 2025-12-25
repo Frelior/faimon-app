@@ -1,26 +1,33 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import CharacterHexagonComponent from '@/components/CharacterHexagonComponent/CharacterHexagonComponent.vue'
 import { useCharactersStore } from '@/stores/characterStore'
+import FiltersComponent from '@/components/FiltersComponent/FiltersComponent.vue'
+import { computed } from 'vue'
 
 const charactersStore = useCharactersStore()
-const characters = computed(() => charactersStore.characters)
+const filteredCharacters = computed(() => charactersStore.filteredCharacters)
 </script>
 
 <template>
-  <div class="characters-view view-container">
-    <CharacterHexagonComponent
-      v-for="character in characters"
-      :key="character.id"
-      :character="character"
-      class="characters-view__item"
-      @mouseenter="charactersStore.changeCurrentCharacterId(character.id)"
-      @focus="charactersStore.changeCurrentCharacterId(character.id)"
-    />
+  <div class="view-container">
+    <FiltersComponent />
+    <div class="characters-view">
+      <CharacterHexagonComponent
+        v-for="character in filteredCharacters"
+        :key="character.id"
+        :character="character"
+        class="characters-view__item"
+        @mouseenter="charactersStore.changeCurrentCharacterId(character.id)"
+        @focus="charactersStore.changeCurrentCharacterId(character.id)"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
+.view-container {
+  gap: 3rem;
+}
 .characters-view {
   --size: 7.5rem;
   display: grid;
