@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,  nextTick, watch, onBeforeUnmount } from 'vue'
+import { ref, nextTick, watch, onBeforeUnmount } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -134,12 +134,13 @@ onBeforeUnmount(() => {
     }
 
     .indicator {
-      margin-top: 2.3rem;
+      margin-top: 2.25rem;
       width: 4rem;
       height: 0.5rem;
       background-color: var(--font-orange);
       transform: translateY(-50%);
       transition: transform 0.2s ease;
+      will-change: transform;
     }
   }
 }

@@ -108,7 +108,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
       align-items: center;
       gap: 1rem;
       padding: 1rem;
-      min-height: 15rem;
+      min-height: 20rem;
 
       .title {
         --shadow: white;

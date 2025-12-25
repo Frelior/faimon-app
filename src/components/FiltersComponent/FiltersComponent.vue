@@ -115,6 +115,9 @@ onUnmounted(() => {
         cursor: pointer;
         transition: all 0.2s ease;
         user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:has(input:checked) {
           color: white;

@@ -41,3 +41,9 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Londrina Shadow';
+  src: url('./LondrinaShadow-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
