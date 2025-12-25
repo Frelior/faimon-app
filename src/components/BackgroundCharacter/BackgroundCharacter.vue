@@ -20,11 +20,7 @@ onMounted(() => {
 <template>
   <div class="img-wrapper bg-image-character">
     <Transition name="fast-fade" mode="out-in">
-      <img
-        :key="hoveredStore.currentCharacterId"
-        :src="imageLink"
-        :class="{ clear: route.name === 'characters' || route.name === 'character' }"
-      />
+      <img :key="hoveredStore.currentCharacterId" :src="imageLink" />
     </Transition>
   </div>
 </template>
@@ -45,14 +41,10 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.8);
+    filter: brightness(1);
     transition:
       opacity 0.05s ease-out,
       filter 0.05s ease-out;
-
-    &.clear {
-      filter: brightness(1);
-    }
   }
 
   mask-image: radial-gradient(

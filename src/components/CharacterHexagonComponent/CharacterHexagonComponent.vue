@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import type { Character } from '@/interfaces/interfaces'
-defineProps<{ character: Character }>()
+defineProps<{ character: Character; squared?: boolean }>()
 </script>
 
 <template>
-  <div class="border" :class="character.rarity" draggable="false" tabindex="0">
+  <div
+    class="border"
+    :class="[character.rarity, { squared: squared }]"
+    draggable="false"
+    tabindex="0"
+  >
     <RouterLink :to="`/characters/${character.id}`" class="router-link" draggable="false">
       <img
         draggable="false"
@@ -65,20 +70,23 @@ defineProps<{ character: Character }>()
     content: '';
     position: absolute;
     opacity: 0.5;
-    width: 25rem;
+    width: 200%;
     height: 5rem;
     background: white;
-    top: -35%;
-    left: 0;
+    top: -50%;
+    right: 0%;
     z-index: 1;
-    transform: rotate(45deg);
-    transition: transform 0.2s;
+    transform: translate(50%, -50%) rotate(45deg);
+    transition:
+      transform 0.2s,
+      top 0.2s,
+      right 0.2s;
   }
 
   &:hover:before,
   &:focus:before {
-    transform: translate(-10rem, 400%) rotate(45deg);
-    transition: transform 0.2s;
+    top: 150%;
+    right: 100%;
   }
   img {
     width: 100%;
@@ -86,6 +94,23 @@ defineProps<{ character: Character }>()
     object-fit: contain;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
     user-select: none;
+  }
+
+  &.squared {
+    --width: 10rem;
+    --height: 15rem;
+    clip-path: none;
+    padding: 0.3rem;
+    border-radius: 1rem;
+
+    img {
+      clip-path: none;
+      object-fit: cover;
+    }
+
+    .router-link {
+      clip-path: none;
+    }
   }
 }
 </style>

@@ -6,6 +6,7 @@ export interface Character {
   rarity: 'sr' | 'ssr' | string
   role: 'assault' | 'support' | 'tactic' | string
   type: 'slash' | 'strike' | 'thrust' | 'spirit' | string
+  tier: 's' | 'a' | 'b' | 'c' | 'd' | string
 
   icon_url: string | null
   image_full_url: string | null

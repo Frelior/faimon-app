@@ -28,7 +28,9 @@ const isCharactersDownloaded = computed(() => characetrStore.characters.length >
       </div>
       <transition name="fade-slow">
         <div
-          v-if="route.name === 'characters' || route.name === 'character'"
+          v-if="
+            route.name === 'characters' || route.name === 'character' || route.name === 'tierlist'
+          "
           class="character-preview-box"
         >
           <CharacterPreviewComponent />
@@ -52,6 +54,7 @@ const isCharactersDownloaded = computed(() => characetrStore.characters.length >
     align-self: flex-start;
     background-color: rgba(0, 0, 0, 0.397);
     padding-bottom: 5rem;
+    padding-top: 1rem;
 
     &::before {
       content: '';
