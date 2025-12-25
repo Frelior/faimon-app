@@ -67,7 +67,10 @@ const character = computed(
           <div class="block-text">
             <p class="skill-title">Getsuga</p>
             <p class="skill-desc">
-              Special attacks prioritize enemies inflicted with Getsuga Mark.
+              Ичиго наносит 5 ударов с сумарным уроном от 5 ударов равным 247% от АТК, и получая
+              Духовное давление(настакивает ульт). Прекратите атаковать после третьего удара, и
+              Ичиго совершит кратковременную атаку. Когда появится свечение, нажмите кнопку базовой
+              атаки, чтобы выполнить специальную атаку.
             </p>
           </div>
         </div>
@@ -167,6 +170,7 @@ const character = computed(
               }
               .skill-desc {
                 font-size: 2rem;
+                white-space: pre-line;
               }
             }
           }
