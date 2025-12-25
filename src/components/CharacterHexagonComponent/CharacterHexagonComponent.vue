@@ -42,6 +42,7 @@ defineProps<{ character: Character }>()
   justify-content: center;
   align-items: center;
   user-select: none;
+  will-change: transform;
 
   &.sr {
     background: linear-gradient(180deg, rgb(68, 68, 68) 35%, rgb(15, 15, 15) 75%, var(--sr) 85%);
