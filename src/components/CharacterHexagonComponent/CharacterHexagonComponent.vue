@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-defineProps({
-  character: {
-    type: Object,
-    required: true,
-  },
-})
+import type { Character } from '@/interfaces/interfaces'
+defineProps<{ character: Character }>()
 </script>
 
 <template>
-  <div class="border" draggable="false" tabindex="0">
+  <div class="border" :class="character.rarity" draggable="false" tabindex="0">
     <RouterLink :to="`/characters/${character.id}`" class="router-link" draggable="false">
       <img
         draggable="false"
@@ -35,7 +31,7 @@ defineProps({
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 
   padding: var(--border-width);
-  background: linear-gradient(250deg, rgb(201, 201, 201), rgb(20, 20, 20));
+  background: linear-gradient(180deg, rgb(201, 201, 201), rgb(20, 20, 20));
   width: var(--width);
   height: var(--height);
   transition: transform 0.2s;
@@ -46,6 +42,14 @@ defineProps({
   justify-content: center;
   align-items: center;
   user-select: none;
+
+  &.sr {
+    background: linear-gradient(180deg, rgb(68, 68, 68) 35%, rgb(15, 15, 15) 75%, var(--sr) 85%);
+  }
+  &.ssr {
+    background: linear-gradient(180deg, rgb(68, 68, 68) 35%, rgb(15, 15, 15) 75%, var(--ssr) 85%);
+    /* background: var(--ssr); */
+  }
 
   &:hover,
   &:focus {
