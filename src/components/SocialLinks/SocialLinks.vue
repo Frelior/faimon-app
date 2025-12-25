@@ -26,6 +26,7 @@ import TelegramFilled from '@vicons/material/TelegramFilled'
     color: white;
     transition: scale 0.1s ease-in-out;
     will-change: transform;
+    transform-origin: center center;
 
     &:hover {
       scale: 1.1;
