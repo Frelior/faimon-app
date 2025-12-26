@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import { ref, onMounted, computed } from 'vue'
 import { useCharactersStore } from '@/stores/characterStore'
 
-const route = useRoute()
 const hoveredStore = useCharactersStore()
 
 const imageLink = computed(() => {
-  return route.name === 'character'
-    ? `/src/media/images/charactersBig/character-fhd-${route.params.id}.png`
-    : `/src/media/images/charactersBig/character-fhd-${hoveredStore.currentCharacterId}.png`
+  return `/src/media/images/charactersBig/character-fhd-${hoveredStore.currentCharacterId}.png`
 })
 const isMounted = ref(false)
 onMounted(() => {

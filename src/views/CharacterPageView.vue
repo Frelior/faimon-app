@@ -1,20 +1,28 @@
 <script setup lang="ts">
 import { useCharactersStore } from '@/stores/characterStore'
-import type { Character } from '@/interfaces/interfaces'
+import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 const props = defineProps<{
   id: string
 }>()
 const characterStore = useCharactersStore()
-characterStore.changeCurrentCharacterId(Number(props.id))
+const router = useRouter()
 
-const character = computed(
-  () => characterStore.findCharacterById(characterStore.currentCharacterId) as Character,
-)
+const character = computed(() => {
+  const pageCharacterId = Number(props.id)
+  const char = characterStore.findCharacterById(pageCharacterId)
+
+  if (!char) {
+    router.replace({ name: 'not-found' })
+    return
+  }
+  characterStore.changeCurrentCharacterId(Number(props.id))
+  return char
+})
 </script>
 
 <template>
-  <div class="view-container character-page">
+  <div class="view-container character-page" v-if="character">
     <div class="header">
       <h2 class="styled-title">{{ character.name }}</h2>
     </div>

@@ -11,7 +11,7 @@ defineProps<{ character: Character; squared?: boolean }>()
     draggable="false"
     tabindex="0"
   >
-    <RouterLink :to="`/characters/${character.id}`" class="router-link" draggable="false">
+    <RouterLink :to="`/character/${character.id}`" class="router-link" draggable="false">
       <img
         draggable="false"
         :src="`/src/media/images/characterIcons/character-icon-${character.id}.png`"
