@@ -2,6 +2,7 @@
 import { useCharactersStore } from '@/stores/characterStore'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+
 const props = defineProps<{
   id: string
 }>()
@@ -18,6 +19,8 @@ const character = computed(() => {
   }
   return char
 })
+import { getCharacterSkills } from '@/services/getCharacterSkills'
+getCharacterSkills(3).then((res) => console.log(res))
 </script>
 
 <template>
