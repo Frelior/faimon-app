@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick, watch, onBeforeUnmount } from 'vue'
+import { ref, nextTick, watch, onBeforeUnmount } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -39,9 +39,9 @@ const onResize = () => {
 
 window.addEventListener('resize', onResize)
 
-onMounted(() => {
-  setActive(0)
-})
+// onMounted(() => {
+//   setActive(0)
+// })
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onResize)
@@ -134,12 +134,13 @@ onBeforeUnmount(() => {
     }
 
     .indicator {
-      margin-top: 2.5rem;
+      margin-top: 2.25rem;
       width: 4rem;
       height: 0.5rem;
       background-color: var(--font-orange);
       transform: translateY(-50%);
       transition: transform 0.2s ease;
+      will-change: transform;
     }
   }
 }

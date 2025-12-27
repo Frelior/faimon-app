@@ -4,7 +4,7 @@ import { useCharactersStore } from '@/stores/characterStore'
 import { computed } from 'vue'
 const characterStore = useCharactersStore()
 const characterObject = computed(() => {
-  return characterStore.findCharacterById(characterStore.currentCharacterId)
+  return characterStore.currentCharacter
 })
 function capitalizeFirstLetterTrimmed(str: string): string {
   const trimmed = str.trimStart()

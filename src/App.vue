@@ -1,47 +1,83 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
+import { useCharactersStore } from './stores/characterStore'
+import { useRoute } from 'vue-router'
+import { getImageUrl } from './services/getImageUrl'
+import { preloadImages } from './services/preloadImages'
+import { isFirstLoading, markAsLoaded } from './services/isFirstLoading'
+import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
 import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
-import { useCharactersStore } from './stores/characterStore'
-import { useRoute } from 'vue-router'
+
 const route = useRoute()
 const characetrStore = useCharactersStore()
-characetrStore.fetchAllCharacters()
+
+const isReady = ref(false)
+
+async function prepareApp() {
+  await characetrStore.fetchAllCharacters()
+
+  const images = characetrStore.characters
+    .map((c) => getImageUrl(c.image_full_path))
+    .filter((url): url is string => Boolean(url))
+
+  const preloadPromise = preloadImages(images)
+
+  if (isFirstLoading()) {
+    await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
+    markAsLoaded()
+  }
+
+  isReady.value = true
+}
+
+prepareApp()
 </script>
 
 <template>
-  <BackgroundComponent />
-  <HeaderComponent />
-  <div class="container">
-    <MenuComponent />
-    <div class="main-window">
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </div>
-    <transition name="fade-slow">
-      <div
-        v-if="route.name === 'characters' || route.name === 'character'"
-        class="character-preview-box"
-      >
-        <CharacterPreviewComponent />
+  <template v-if="isReady">
+    <BackgroundComponent />
+    <HeaderComponent />
+    <div class="container">
+      <MenuComponent />
+      <div class="main-window">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </div>
-    </transition>
-  </div>
+      <transition name="fade-slow">
+        <div
+          v-if="
+            route.name === 'characters' || route.name === 'character' || route.name === 'tierlist'
+          "
+          class="character-preview-box"
+        >
+          <CharacterPreviewComponent />
+        </div>
+      </transition>
+    </div>
+  </template>
+  <div v-else><LoadingComponent fullscreen /></div>
 </template>
 
 <style scoped>
 .container {
   display: flex;
+  animation: fade-in 1s ease forwards;
 
   .main-window {
     width: 60%;
     height: 90%;
     position: relative;
     overflow: hidden;
+    align-self: flex-start;
+    background-color: rgba(0, 0, 0, 0.397);
+    padding-bottom: 5rem;
+    padding-top: 1rem;
 
     &::before {
       content: '';
