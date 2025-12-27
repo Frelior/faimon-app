@@ -3,17 +3,22 @@ import { defineStore } from 'pinia'
 import type { Character } from '@/interfaces/interfaces'
 import { supabase } from '@/lib/supabaseClient.ts'
 import type { Filters } from '@/interfaces/interfaces'
+import { randomInt } from '@/services/randomInt'
 
 export const useCharactersStore = defineStore('charactersStore', () => {
-  const currentCharacterId = ref(randomInt(1, 17))
   const characters = ref<Character[]>([])
-  const filteredCharacters = computed(() => filterCharacters(characters.value, filters))
+  const currentCharacterId = ref(0)
+  const currentCharacter = computed(() =>
+    characters.value.find((character) => character.id === currentCharacterId.value),
+  )
+  const filteredCharacters = computed(() =>
+    filterCharacters(characters.value, filters).sort((a, b) => a.id - b.id),
+  )
   const filters = reactive<Filters>({
     role: null,
     type: null,
     rarity: null,
   })
-
   function filterCharacters(characters: Character[], filters: Filters): Character[] {
     return characters.filter((character) => {
       if (filters.role && character.role !== filters.role) return false
@@ -22,35 +27,25 @@ export const useCharactersStore = defineStore('charactersStore', () => {
       return true
     })
   }
-
   function resetFilters() {
     filters.role = null
     filters.type = null
     filters.rarity = null
   }
 
-  function randomInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-  }
-
   function changeCurrentCharacterId(newValue: number) {
     currentCharacterId.value = newValue
   }
-
   async function fetchAllCharacters() {
     const { data, error } = await supabase.from('characters').select()
-
     if (error) {
       console.log(error)
       return
     }
-    characters.value = data ?? []
-
-    console.log(data)
-  }
-
-  function findCharacterById(id: number) {
-    return characters.value?.find((character) => character.id === id)
+    if (data) {
+      currentCharacterId.value = randomInt(1, data.length)
+      characters.value = data ?? []
+    }
   }
 
   return {
@@ -58,7 +53,7 @@ export const useCharactersStore = defineStore('charactersStore', () => {
     characters,
     filteredCharacters,
     filters,
-    findCharacterById,
+    currentCharacter,
     changeCurrentCharacterId,
     fetchAllCharacters,
     resetFilters,

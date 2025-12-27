@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useCharactersStore } from '@/stores/characterStore'
+import { getImageUrl } from '@/services/getImageUrl'
 
-const hoveredStore = useCharactersStore()
-
-const imageLink = computed(() => {
-  return `/src/media/images/charactersBig/character-fhd-${hoveredStore.currentCharacterId}.png`
-})
+const store = useCharactersStore()
+const imageUrl = computed(
+  () => store.currentCharacter && getImageUrl(store.currentCharacter.image_full_path),
+)
 const isMounted = ref(false)
 onMounted(() => {
   isMounted.value = true
@@ -14,11 +14,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="img-wrapper bg-image-character">
-    <Transition name="fast-fade" mode="out-in">
-      <img :key="hoveredStore.currentCharacterId" :src="imageLink" />
-    </Transition>
-  </div>
+  <Transition name="slow" mode="out-in">
+    <div class="bg-image-character" v-if="isMounted">
+      <Transition name="fast" mode="out-in">
+        <img
+          v-if="store.currentCharacterId"
+          :key="store.currentCharacterId"
+          :src="imageUrl || ''"
+        />
+      </Transition>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
@@ -37,10 +43,6 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(1);
-    transition:
-      opacity 0.05s ease-out,
-      filter 0.05s ease-out;
   }
 
   mask-image: radial-gradient(
@@ -54,11 +56,18 @@ onMounted(() => {
   );
 }
 
-.fast-fade-enter-active,
-.fast-fade-leave-active {
+.slow-enter-active,
+.slow-leave-active {
+  transition: opacity 1s ease;
 }
-.fast-fade-enter-from,
-.fast-fade-leave-to {
+.fast-enter-active,
+.fast-leave-active {
+  transition: opacity 0.1s ease-in-out;
+}
+.slow-enter-from,
+.slow-leave-to,
+.fast-enter-from,
+.fast-leave-to {
   opacity: 0;
 }
 </style>

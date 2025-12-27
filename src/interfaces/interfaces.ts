@@ -8,8 +8,8 @@ export interface Character {
   type: 'slash' | 'strike' | 'thrust' | 'spirit' | string
   tier: 's' | 'a' | 'b' | 'c' | 'd' | string
 
-  icon_url: string | null
-  image_full_url: string | null
+  icon_path: string | null
+  image_full_path: string | null
 
   attack: number | null
   defence: number | null

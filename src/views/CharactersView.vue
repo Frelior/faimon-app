@@ -20,8 +20,6 @@ const filteredCharacters = computed(() => charactersStore.filteredCharacters)
         :character="character"
         class="characters-view__item"
         :squared="isCardsView"
-        @mouseenter="charactersStore.changeCurrentCharacterId(character.id)"
-        @focus="charactersStore.changeCurrentCharacterId(character.id)"
       />
     </div>
   </div>

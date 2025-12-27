@@ -1,20 +1,43 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { ref } from 'vue'
+import { useCharactersStore } from './stores/characterStore'
+import { useRoute } from 'vue-router'
+import { getImageUrl } from './services/getImageUrl'
+import { preloadImages } from './services/preloadImages'
+import { isFirstLoading, markAsLoaded } from './services/isFirstLoading'
 import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
 import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
-import { useCharactersStore } from './stores/characterStore'
-import { useRoute } from 'vue-router'
+
 const route = useRoute()
 const characetrStore = useCharactersStore()
-characetrStore.fetchAllCharacters()
-const isCharactersDownloaded = computed(() => characetrStore.characters.length > 0)
+
+const isReady = ref(false)
+
+async function prepareApp() {
+  await characetrStore.fetchAllCharacters()
+
+  const images = characetrStore.characters
+    .map((c) => getImageUrl(c.image_full_path))
+    .filter((url): url is string => Boolean(url))
+
+  const preloadPromise = preloadImages(images)
+
+  if (isFirstLoading()) {
+    await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
+    markAsLoaded()
+  }
+
+  isReady.value = true
+}
+
+prepareApp()
 </script>
 
 <template>
-  <template v-if="isCharactersDownloaded">
+  <template v-if="isReady">
     <BackgroundComponent />
     <HeaderComponent />
     <div class="container">

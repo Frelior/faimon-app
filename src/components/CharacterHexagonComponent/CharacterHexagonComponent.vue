@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { getImageUrl } from '@/services/getImageUrl'
+import { useCharactersStore } from '@/stores/characterStore'
 import type { Character } from '@/interfaces/interfaces'
-defineProps<{ character: Character; squared?: boolean }>()
+
+const store = useCharactersStore()
+const props = defineProps<{ character: Character; squared?: boolean }>()
+const iconUrl = getImageUrl(props.character.icon_path)
 </script>
 
 <template>
@@ -10,13 +15,11 @@ defineProps<{ character: Character; squared?: boolean }>()
     :class="[character.rarity, { squared: squared }]"
     draggable="false"
     tabindex="0"
+    @mouseenter="store.changeCurrentCharacterId(character.id)"
+    @focus="store.changeCurrentCharacterId(character.id)"
   >
     <RouterLink :to="`/character/${character.id}`" class="router-link" draggable="false">
-      <img
-        draggable="false"
-        :src="`/src/media/images/characterIcons/character-icon-${character.id}.png`"
-        id="clipped"
-      />
+      <img draggable="false" :src="iconUrl || ''" id="clipped" />
     </RouterLink>
   </div>
 </template>

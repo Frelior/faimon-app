@@ -25,8 +25,6 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
             :key="character.id"
             :character="character"
             class="characters-view__item"
-            @mouseenter="characterStore.changeCurrentCharacterId(character.id)"
-            @focus="characterStore.changeCurrentCharacterId(character.id)"
           />
         </div>
       </div>

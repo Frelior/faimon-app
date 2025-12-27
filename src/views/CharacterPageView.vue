@@ -9,14 +9,13 @@ const characterStore = useCharactersStore()
 const router = useRouter()
 
 const character = computed(() => {
-  const pageCharacterId = Number(props.id)
-  const char = characterStore.findCharacterById(pageCharacterId)
+  characterStore.changeCurrentCharacterId(Number(props.id))
+  const char = characterStore.currentCharacter
 
   if (!char) {
     router.replace({ name: 'not-found' })
     return
   }
-  characterStore.changeCurrentCharacterId(Number(props.id))
   return char
 })
 </script>
