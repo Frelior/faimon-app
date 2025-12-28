@@ -17,7 +17,7 @@ defineProps({
 <style scoped>
 .wrapper {
   opacity: 0;
-  animation: fade-in 4s linear forwards;
+  animation: fade-in 2s linear forwards;
 }
 .loader {
   width: 5rem;
@@ -52,7 +52,7 @@ defineProps({
   0% {
     opacity: 0;
   }
-  75% {
+  50% {
     opacity: 0;
   }
   80% {
