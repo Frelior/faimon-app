@@ -22,3 +22,24 @@ export interface Filters {
   type: 'slash' | 'strike' | 'thrust' | 'spirit' | null
   rarity: 'sr' | 'ssr' | null
 }
+export interface Skill {
+  id: number
+  created_at: string
+  character_id: number | null
+  name: string | null
+  description: string | null
+  image_path: string | null
+  type:
+    | 'attack'
+    | 'technique'
+    | 'ultimate'
+    | 'counter'
+    | 'dodge'
+    | 'passive'
+    | 'constellation'
+    | 'weapon'
+    | 'coreStamp'
+    | 'description'
+    | null
+  order_index: number | null
+}

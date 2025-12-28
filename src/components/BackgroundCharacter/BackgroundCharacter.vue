@@ -62,7 +62,7 @@ onMounted(() => {
 }
 .fast-enter-active,
 .fast-leave-active {
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
 }
 .slow-enter-from,
 .slow-leave-to,
