@@ -34,6 +34,11 @@ const router = createRouter({
       name: 'tierlist',
       component: () => import('../views/TierListView.vue'),
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../views/AdminView.vue'),
+    },
   ],
 })
 

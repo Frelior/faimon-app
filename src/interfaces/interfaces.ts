@@ -43,3 +43,9 @@ export interface Skill {
     | null
   order_index: number | null
 }
+export interface News {
+  id: number
+  created_at: string
+  type: string
+  text: string
+}

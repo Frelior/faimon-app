@@ -202,6 +202,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      gap: 1rem;
       align-items: flex-start;
       background-color: rgba(0, 0, 0, 0.781);
       overflow: hidden;
@@ -232,7 +233,14 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
         align-self: center;
         font-size: 2rem;
         padding: 0.3rem 0rem;
-        background-color: var(--skills-grid);
+        background: linear-gradient(
+          to right,
+          var(--skills-grid) 30%,
+          var(--font-orange-05),
+          var(--skills-grid) 70%
+        );
+        border: 0.3rem solid var(--font-orange-05);
+        border-radius: 0.5rem;
         text-align: center;
         width: 100%;
       }
