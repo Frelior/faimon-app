@@ -58,6 +58,11 @@ const type = computed(() => characterObject.value!.type)
     display: flex;
     align-items: center;
     position: relative;
+    .styled-title {
+      font-size: 5rem;
+      font-family: 'Capture It';
+      font-weight: 500;
+    }
   }
 
   .tags {

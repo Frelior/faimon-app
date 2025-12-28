@@ -8,11 +8,17 @@ defineProps({
 </script>
 
 <template>
-  <div v-if="!fullscreen" class="loader"></div>
-  <div v-else class="fullscreen"><div class="loader"></div></div>
+  <div class="wrapper">
+    <div v-if="!fullscreen" class="loader"></div>
+    <div v-else class="fullscreen"><div class="loader"></div></div>
+  </div>
 </template>
 
 <style scoped>
+.wrapper {
+  opacity: 0;
+  animation: fade-in 4s linear forwards;
+}
 .loader {
   width: 5rem;
   height: 5rem;
@@ -39,6 +45,21 @@ defineProps({
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

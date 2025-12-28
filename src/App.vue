@@ -70,7 +70,8 @@ prepareApp()
   animation: fade-in 1s ease forwards;
 
   .main-window {
-    width: 60%;
+    min-width: 65%;
+    width: 65%;
     height: 90%;
     position: relative;
     overflow: hidden;
@@ -108,17 +109,6 @@ prepareApp()
         linear-gradient(#000 0 0);
       mask-composite: exclude;
       -webkit-mask-composite: xor;
-    }
-    &::after {
-      backdrop-filter: blur(0.5rem);
-      /* background-color: #000; */
-      content: '';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -4;
     }
   }
   .character-preview-box {
