@@ -44,8 +44,9 @@ export interface Skill {
   order_index: number | null
 }
 export interface News {
-  id: number
-  created_at: string
-  type: string
-  text: string
+  id?: number
+  client_id?: string
+  created_at?: string
+  type: 'news' | 'description' | null
+  text: string | null
 }

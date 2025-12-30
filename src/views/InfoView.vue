@@ -36,7 +36,7 @@ onMounted(async () => {
     <div class="news" v-if="newsGrouped?.news.length">
       <hr />
       <h2>Последние новости портала:</h2>
-      <ul>
+      <ul v-if="newsGrouped.news">
         <li v-for="news in newsGrouped.news" :key="news.id">
           <span>{{ news.text }}</span>
           <span class="date"> - {{ formatDate(news.created_at) }}</span>
