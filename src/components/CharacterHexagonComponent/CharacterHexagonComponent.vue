@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { getImageUrl } from '@/services/getImageUrl'
+import { getImageUrl } from '@/services/images'
 import { useCharactersStore } from '@/stores/characterStore'
 import type { Character } from '@/interfaces/interfaces'
 

@@ -1,25 +1,18 @@
 <script setup lang="ts">
 import type { News } from '@/interfaces/interfaces'
-import { getNews } from '@/services/getNews'
-import { ref, onMounted, computed } from 'vue'
-import { formatDate } from '@/services/formatDate'
+import { getNews } from '@/services/news'
+import { reactive, onMounted } from 'vue'
+import { formatDate } from '@/services/utility'
 
-const news = ref<News[]>([])
-const newsGrouped = computed(() => {
-  if (!news.value) return
-  return {
-    news: news.value.filter((news) => news.type === 'news'),
-    description: news.value.filter((news) => news.type === 'description'),
-  }
-  {
-  }
-})
+const news = reactive<{ news: News[]; description: News[] }>({ news: [], description: [] })
+
 onMounted(async () => {
   const data = await getNews()
   if (data) {
     console.log(data)
 
-    news.value = data
+    news.news = data.news
+    news.description = data.descriptions
   }
 })
 </script>
@@ -27,19 +20,19 @@ onMounted(async () => {
 <template>
   <div class="info-view view-container">
     <h1>FAIMON BLEACH SOUL RESONANCE</h1>
-    <div class="description" v-if="newsGrouped?.description.length">
-      <p v-for="description in newsGrouped.description" :key="description.id">
+    <div class="description" v-if="news.description">
+      <p v-for="description in news.description" :key="description.client_id">
         {{ description.text }}
       </p>
     </div>
 
-    <div class="news" v-if="newsGrouped?.news.length">
+    <div class="news" v-if="news.news">
       <hr />
       <h2>Последние новости портала:</h2>
-      <ul v-if="newsGrouped.news">
-        <li v-for="news in newsGrouped.news" :key="news.id">
-          <span>{{ news.text }}</span>
-          <span class="date"> - {{ formatDate(news.created_at) }}</span>
+      <ul v-if="news.news">
+        <li v-for="newsItem in news.news" :key="newsItem.client_id">
+          <span>{{ newsItem.text }}</span>
+          <span class="date" v-if="newsItem.created_at"> - {{ formatDate(newsItem.created_at) }}</span>
         </li>
       </ul>
     </div>

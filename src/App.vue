@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import { useCharactersStore } from './stores/characterStore'
 import { useRoute } from 'vue-router'
-import { getImageUrl } from './services/getImageUrl'
-import { preloadImages } from './services/preloadImages'
-import { isFirstLoading, markAsLoaded } from './services/isFirstLoading'
+import { getImageUrl } from './services/images'
+import { preloadImages } from './services/images'
+import { isFirstLoading, markAsLoaded } from './services/storage'
 import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
@@ -17,8 +17,6 @@ const characetrStore = useCharactersStore()
 const isReady = ref(false)
 
 async function prepareApp() {
-  await characetrStore.fetchAllCharacters()
-
   const images = characetrStore.characters
     .map((c) => getImageUrl(c.image_full_path))
     .filter((url): url is string => Boolean(url))

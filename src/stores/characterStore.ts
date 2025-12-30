@@ -1,9 +1,9 @@
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import type { Character } from '@/interfaces/interfaces'
-import { supabase } from '@/lib/supabaseClient.ts'
 import type { Filters } from '@/interfaces/interfaces'
-import { randomInt } from '@/services/randomInt'
+import { randomInt } from '@/services/utility'
+import { fetchAllCharacters } from '@/services/characters'
 
 export const useCharactersStore = defineStore('charactersStore', () => {
   const characters = ref<Character[]>([])
@@ -32,21 +32,17 @@ export const useCharactersStore = defineStore('charactersStore', () => {
     filters.type = null
     filters.rarity = null
   }
-
   function changeCurrentCharacterId(newValue: number) {
     currentCharacterId.value = newValue
   }
-  async function fetchAllCharacters() {
-    const { data, error } = await supabase.from('characters').select()
-    if (error) {
-      console.log(error)
-      return
-    }
-    if (data) {
+
+  onMounted(async () => {
+    const data = await fetchAllCharacters()
+    if (data?.length) {
       currentCharacterId.value = randomInt(1, data.length)
-      characters.value = data ?? []
+      characters.value = data
     }
-  }
+  })
 
   return {
     currentCharacterId,
@@ -55,7 +51,6 @@ export const useCharactersStore = defineStore('charactersStore', () => {
     filters,
     currentCharacter,
     changeCurrentCharacterId,
-    fetchAllCharacters,
     resetFilters,
   }
 })

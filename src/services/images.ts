@@ -1,3 +1,11 @@
+import { supabase } from '@/lib/supabaseClient.ts'
+
+export function getImageUrl(path: string | null): string | null {
+  if (!path) return null
+
+  return supabase.storage.from('media').getPublicUrl(path).data.publicUrl
+}
+
 export function preloadImages(urls: string[]): Promise<void> {
   if (!urls.length) return Promise.resolve()
 

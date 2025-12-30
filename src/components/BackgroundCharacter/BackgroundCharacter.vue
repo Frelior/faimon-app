@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useCharactersStore } from '@/stores/characterStore'
-import { getImageUrl } from '@/services/getImageUrl'
+import { getImageUrl } from '@/services/images'
 
 const store = useCharactersStore()
 const imageUrl = computed(

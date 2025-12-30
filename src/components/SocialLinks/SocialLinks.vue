@@ -31,11 +31,6 @@ import TelegramFilled from '@vicons/material/TelegramFilled'
     &:hover {
       scale: 1.1;
     }
-
-    svg {
-      /* width: 100%;
-      height: 100%; */
-    }
   }
 }
 </style>

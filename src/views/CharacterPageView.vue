@@ -3,9 +3,9 @@ import { useCharactersStore } from '@/stores/characterStore'
 import { useRouter } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import LoadingComponent from '@/components/LoadingComponent/LoadingComponent.vue'
-import { getCharacterSkills } from '@/services/getCharacterSkills'
-import { getSkillsByType } from '@/services/getSkillsByType'
-import { getImageUrl } from '@/services/getImageUrl'
+import { getCharacterSkills } from '@/services/skills'
+import { getSkillsByType } from '@/services/skills'
+import { getImageUrl } from '@/services/images'
 import type { Skill } from '@/interfaces/interfaces'
 
 const props = defineProps<{

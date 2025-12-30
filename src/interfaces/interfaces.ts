@@ -25,6 +25,7 @@ export interface Filters {
 export interface Skill {
   id: number
   created_at: string
+  client_id?: string
   character_id: number | null
   name: string | null
   description: string | null
