@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify'
+
 export function formatDate(date: string | undefined): string {
   if (!date) return ''
   const formatted = new Date(date).toLocaleDateString('ru-RU')
@@ -24,3 +26,7 @@ export function removeClientId<T extends { client_id?: string | null }>(
   return rest
 }
 
+export function sanitizeHtml(html: string) {
+  if (!html) return ''
+  return DOMPurify.sanitize(html)
+}

@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { getNews, addNewsItem, deleteNewsItem } from '@/services/news'
 import { removeClientId } from '@/services/utility'
 import type { News } from '@/interfaces/interfaces'

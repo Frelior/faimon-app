@@ -77,6 +77,7 @@ prepareApp()
     background-color: rgba(0, 0, 0, 0.397);
     padding-bottom: 5rem;
     padding-top: 1rem;
+    z-index: -5;
 
     &::before {
       content: '';

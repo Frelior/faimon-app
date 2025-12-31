@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabaseClient.ts'
 import type { News } from '@/interfaces/interfaces'
 import { setClientId } from '@/services/setClientId'
+import { sanitizeHtml } from './utility'
 
 export async function getNews(): Promise<{ news: News[]; descriptions: News[] } | undefined> {
   const { data, error } = await supabase.from('news').select('*').order('type')
@@ -41,4 +42,12 @@ export function deleteNewsItem(arrayToMutate: News[], item: News, deletedItems: 
     1,
   )
   console.log('items after delete', arrayToMutate)
+}
+
+export function sanitizeNewsText(news: News) {
+  const { text, ...rest } = news
+  return {
+    ...rest,
+    text: sanitizeHtml(text || ''),
+  }
 }

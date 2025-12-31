@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { News } from '@/interfaces/interfaces'
-import { getNews } from '@/services/news'
+import { getNews, sanitizeNewsText } from '@/services/news'
 import { reactive, onMounted } from 'vue'
 import { formatDate } from '@/services/utility'
 
@@ -11,19 +11,21 @@ onMounted(async () => {
   if (data) {
     console.log(data)
 
-    news.news = data.news
-    news.description = data.descriptions
+    news.news = data.news.map(sanitizeNewsText)
+    news.description = data.descriptions.map(sanitizeNewsText)
   }
 })
 </script>
 
 <template>
-  <div class="info-view view-container">
+  <div class="info-view view-container" v-if="news.description.length || news.news.length">
     <h1>FAIMON BLEACH SOUL RESONANCE</h1>
     <div class="description" v-if="news.description">
-      <p v-for="description in news.description" :key="description.client_id">
-        {{ description.text }}
-      </p>
+      <p
+        v-for="description in news.description"
+        :key="description.client_id"
+        v-html="description.text"
+      ></p>
     </div>
 
     <div class="news" v-if="news.news">
@@ -31,8 +33,10 @@ onMounted(async () => {
       <h2>Последние новости портала:</h2>
       <ul v-if="news.news">
         <li v-for="newsItem in news.news" :key="newsItem.client_id">
-          <span>{{ newsItem.text }}</span>
-          <span class="date" v-if="newsItem.created_at"> - {{ formatDate(newsItem.created_at) }}</span>
+          <span v-html="newsItem.text"></span>
+          <span class="date" v-if="newsItem.created_at">
+            - {{ formatDate(newsItem.created_at) }}</span
+          >
         </li>
       </ul>
     </div>
@@ -61,7 +65,7 @@ onMounted(async () => {
 
       li {
         position: relative;
-
+        padding: 0rem 2rem;
         & span {
           text-shadow: 0 0 1rem black;
         }
