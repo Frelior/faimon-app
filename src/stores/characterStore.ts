@@ -8,9 +8,10 @@ import { fetchAllCharacters } from '@/services/characters'
 export const useCharactersStore = defineStore('charactersStore', () => {
   const characters = ref<Character[]>([])
   const currentCharacterId = ref(0)
-  const currentCharacter = computed(() =>
-    characters.value.find((character) => character.id === currentCharacterId.value),
-  )
+  const currentCharacter = computed(() => {
+    console.log(characters.value.find((character) => character.id === currentCharacterId.value))
+    return characters.value.find((character) => character.id === currentCharacterId.value)
+  })
   const filteredCharacters = computed(() =>
     filterCharacters(characters.value, filters).sort((a, b) => a.id - b.id),
   )

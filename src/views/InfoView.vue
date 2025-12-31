@@ -81,6 +81,7 @@ onMounted(async () => {
           left: 0;
           opacity: 0.2;
           z-index: -1;
+          border-radius: 1rem;
         }
 
         .date {

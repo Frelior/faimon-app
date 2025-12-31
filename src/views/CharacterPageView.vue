@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useCharactersStore } from '@/stores/characterStore'
-import { useRouter } from 'vue-router'
 import { computed, ref, watch } from 'vue'
 import LoadingComponent from '@/components/LoadingComponent/LoadingComponent.vue'
 import { getCharacterSkills } from '@/services/skills'
@@ -12,15 +11,10 @@ const props = defineProps<{
   id: string
 }>()
 const characterStore = useCharactersStore()
-const router = useRouter()
 const character = computed(() => {
   characterStore.changeCurrentCharacterId(Number(props.id))
   const char = characterStore.currentCharacter
 
-  if (!char) {
-    router.replace({ name: 'not-found' })
-    return
-  }
   return char
 })
 const skills = ref<Skill[]>([])
@@ -35,6 +29,7 @@ watch(
   },
   { immediate: true },
 )
+
 const skillSections = computed(() => [
   {
     key: 'attack',
@@ -158,6 +153,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
               v-if="getImageUrl(skill.image_path)"
               :src="getImageUrl(skill.image_path) ?? ''"
               class="block-skill-image"
+              loading="lazy"
             />
             <div class="block-text">
               <p class="skill-title" v-if="skill.name">{{ skill.name }}</p>
