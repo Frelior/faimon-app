@@ -1,6 +1,7 @@
 export interface Character {
-  id: number
-  created_at: string
+  id?: number
+  created_at?: string
+  client_id?: string
 
   name: string
   rarity: 'sr' | 'ssr' | string
@@ -23,13 +24,14 @@ export interface Filters {
   rarity: 'sr' | 'ssr' | null
 }
 export interface Skill {
-  id: number
-  created_at: string
+  id?: number
+  created_at?: string
   client_id?: string
-  character_id: number | null
+  character_id?: number
   name: string | null
   description: string | null
   image_path: string | null
+  preview_url?: string
   type:
     | 'attack'
     | 'technique'
@@ -41,6 +43,7 @@ export interface Skill {
     | 'weapon'
     | 'coreStamp'
     | 'description'
+    | string
     | null
   order_index: number | null
 }

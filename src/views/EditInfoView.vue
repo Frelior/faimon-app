@@ -57,7 +57,7 @@ async function saveChangesDB() {
     if (error) {
       console.error(error)
       isError = true
-      break
+      return
     }
   }
 
@@ -67,6 +67,7 @@ async function saveChangesDB() {
     if (error) {
       console.error(error)
       isError = true
+      return
     }
   }
 

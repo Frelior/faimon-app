@@ -22,7 +22,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
           <CharacterHexagonComponent
             squared
             v-for="character in tierS"
-            :key="character.id"
+            :key="character.client_id"
             :character="character"
             class="characters-view__item"
           />
@@ -34,7 +34,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
           <CharacterHexagonComponent
             squared
             v-for="character in tierA"
-            :key="character.id"
+            :key="character.client_id"
             :character="character"
             class="characters-view__item"
             @mouseenter="characterStore.changeCurrentCharacterId(character.id)"
@@ -48,7 +48,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
           <CharacterHexagonComponent
             squared
             v-for="character in tierB"
-            :key="character.id"
+            :key="character.client_id"
             :character="character"
             class="characters-view__item"
             @mouseenter="characterStore.changeCurrentCharacterId(character.id)"
@@ -62,7 +62,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
           <CharacterHexagonComponent
             squared
             v-for="character in tierC"
-            :key="character.id"
+            :key="character.client_id"
             :character="character"
             class="characters-view__item"
             @mouseenter="characterStore.changeCurrentCharacterId(character.id)"
@@ -76,7 +76,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
           <CharacterHexagonComponent
             squared
             v-for="character in tierD"
-            :key="character.id"
+            :key="character.client_id"
             :character="character"
             class="characters-view__item"
             @mouseenter="characterStore.changeCurrentCharacterId(character.id)"

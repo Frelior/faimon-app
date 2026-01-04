@@ -50,7 +50,10 @@ prepareApp()
       <transition name="fade-slow">
         <div
           v-if="
-            route.name === 'characters' || route.name === 'character' || route.name === 'tierlist'
+            route.name === 'characters' ||
+            route.name === 'character' ||
+            route.name === 'tierlist' ||
+            route.name === 'edit-character'
           "
           class="character-preview-box"
         >
@@ -68,8 +71,8 @@ prepareApp()
   animation: fade-in 1s ease forwards;
 
   .main-window {
-    min-width: 65%;
-    width: 65%;
+    min-width: 75%;
+    width: 75%;
     height: 90%;
     position: relative;
     overflow: hidden;

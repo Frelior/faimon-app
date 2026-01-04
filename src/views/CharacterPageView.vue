@@ -1,27 +1,30 @@
 <script setup lang="ts">
 import { useCharactersStore } from '@/stores/characterStore'
 import { computed, ref, watch } from 'vue'
+import { sanitizeHtml } from '@/services/utility'
 import LoadingComponent from '@/components/LoadingComponent/LoadingComponent.vue'
 import { getCharacterSkills } from '@/services/skills'
 import { getSkillsByType } from '@/services/skills'
 import { getImageUrl } from '@/services/images'
-import type { Skill } from '@/interfaces/interfaces'
+import type { Character, Skill } from '@/interfaces/interfaces'
 
 const props = defineProps<{
-  id: string
+  id?: string
+  previewSkills?: Skill[]
+  previewCharacter?: Character
 }>()
 const characterStore = useCharactersStore()
 const character = computed(() => {
+  if (props.previewCharacter) return props.previewCharacter
   characterStore.changeCurrentCharacterId(Number(props.id))
   const char = characterStore.currentCharacter
-
   return char
 })
-const skills = ref<Skill[]>([])
+const skills = ref<Skill[]>(props.previewSkills ?? [])
 watch(
   character,
   async () => {
-    if (character.value) {
+    if (!props.previewSkills && character.value) {
       const data = await getCharacterSkills(character.value.id)
       skills.value = data ?? []
       console.log(data)
@@ -81,7 +84,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
 </script>
 
 <template>
-  <div class="view-container character-page">
+  <div :class="{ 'view-container': !props.previewSkills }" class="character-page">
     <template v-if="character && skills.length > 0">
       <div class="body">
         <!-- <div class="info-block base-stats">
@@ -133,14 +136,20 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
             :key="description.id"
           >
             <div class="block-text">
-              <p class="skill-title" v-if="description.name">{{ description.name }}</p>
-              <p class="skill-desc" v-if="description.description">
-                {{ description.description }}
-              </p>
+              <p
+                class="skill-title"
+                v-if="description.name"
+                v-html="sanitizeHtml(description.name)"
+              ></p>
+              <p
+                class="skill-desc"
+                v-if="description.description"
+                v-html="sanitizeHtml(description.description)"
+              ></p>
             </div>
             <img
-              v-if="getImageUrl(description.image_path)"
-              :src="getImageUrl(description.image_path) ?? ''"
+              v-if="description.image_path"
+              :src="description.preview_url ?? getImageUrl(description.image_path) ?? ''"
               class="block-skill-image"
             />
           </div>
@@ -150,14 +159,18 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           <p class="block-title">{{ section.title }}:</p>
           <div class="block-skill" v-for="skill in section.skills" :key="skill.id">
             <img
-              v-if="getImageUrl(skill.image_path)"
-              :src="getImageUrl(skill.image_path) ?? ''"
+              v-if="skill.image_path"
+              :src="skill.preview_url ?? getImageUrl(skill.image_path) ?? ''"
               class="block-skill-image"
               loading="lazy"
             />
             <div class="block-text">
-              <p class="skill-title" v-if="skill.name">{{ skill.name }}</p>
-              <p class="skill-desc" v-if="skill.description">{{ skill.description }}</p>
+              <p class="skill-title" v-if="skill.name" v-html="sanitizeHtml(skill.name)"></p>
+              <p
+                class="skill-desc"
+                v-if="skill.description"
+                v-html="sanitizeHtml(skill.description)"
+              ></p>
             </div>
           </div>
         </div>

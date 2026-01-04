@@ -1,19 +1,25 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
-import type { Character } from '@/interfaces/interfaces'
-import type { Filters } from '@/interfaces/interfaces'
+import type { Character, Filters, Skill } from '@/interfaces/interfaces'
 import { randomInt } from '@/services/utility'
-import { fetchAllCharacters } from '@/services/characters'
+import { fetchAllCharacters, createNewCharacter } from '@/services/characters'
 
 export const useCharactersStore = defineStore('charactersStore', () => {
+  const editViewCharacterIconUrl = ref('')
+  const editViewCharacterImageUrl = ref('')
+  const editViewCharacterSkills = ref<Skill[]>([])
+  const newCharacter = reactive<Character>(createNewCharacter())
   const characters = ref<Character[]>([])
   const currentCharacterId = ref(0)
   const currentCharacter = computed(() => {
     console.log(characters.value.find((character) => character.id === currentCharacterId.value))
-    return characters.value.find((character) => character.id === currentCharacterId.value)
+    if (currentCharacterId.value === -1) return newCharacter
+    return characters.value.find(
+      (character: Character) => character.id === currentCharacterId.value,
+    )
   })
   const filteredCharacters = computed(() =>
-    filterCharacters(characters.value, filters).sort((a, b) => a.id - b.id),
+    filterCharacters(characters.value, filters).sort((a, b) => a.id! - b.id!),
   )
   const filters = reactive<Filters>({
     role: null,
@@ -33,8 +39,10 @@ export const useCharactersStore = defineStore('charactersStore', () => {
     filters.type = null
     filters.rarity = null
   }
-  function changeCurrentCharacterId(newValue: number) {
-    currentCharacterId.value = newValue
+  function changeCurrentCharacterId(newValue: number | undefined) {
+    if (newValue) {
+      currentCharacterId.value = newValue
+    }
   }
 
   onMounted(async () => {
@@ -51,6 +59,9 @@ export const useCharactersStore = defineStore('charactersStore', () => {
     filteredCharacters,
     filters,
     currentCharacter,
+    editViewCharacterIconUrl,
+    editViewCharacterImageUrl,
+    editViewCharacterSkills,
     changeCurrentCharacterId,
     resetFilters,
   }

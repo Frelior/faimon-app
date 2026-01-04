@@ -21,7 +21,7 @@ const type = computed(() => characterObject.value!.type)
   <div v-if="characterObject" class="character-preview">
     <div class="bg"></div>
     <div class="title">
-      <h3 class="styled-title">{{ characterObject?.name }}</h3>
+      <h3 class="styled-title">{{ characterObject.name }}</h3>
     </div>
     <div class="tags">
       <p class="tag" :class="rarity" v-if="rarity">{{ rarity.toUpperCase() }}</p>
