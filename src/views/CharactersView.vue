@@ -50,6 +50,7 @@ const filteredCharacters = computed(() => charactersStore.filteredCharacters)
     &.on {
       --rotate: 0deg;
       height: 3rem;
+      border-radius: 0.3rem;
     }
   }
 }

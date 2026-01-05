@@ -14,7 +14,7 @@ import BackgroundCharacter from '../BackgroundCharacter/BackgroundCharacter.vue'
       type="video/mp4"
       webkit-playsinline
       poster="/src/media/images/bg-static.png"
-      src="/src/media/video/bg-video.mp4"
+      src="https://pgaorpxhhndfvyajdwhx.supabase.co/storage/v1/object/public/media/video/bg-video.mp4"
     ></video>
     <div class="vignette"></div>
     <BackgroundCharacter />
