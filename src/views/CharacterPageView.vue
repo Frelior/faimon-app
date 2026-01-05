@@ -154,26 +154,26 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
             />
           </div>
         </div>
-
-        <div class="info-block" v-for="section in skillSections" :key="section.key">
-          <p class="block-title">{{ section.title }}:</p>
-          <div class="block-skill" v-for="skill in section.skills" :key="skill.id">
-            <img
-              v-if="skill.image_path"
-              :src="skill.preview_url ?? getImageUrl(skill.image_path) ?? ''"
-              class="block-skill-image"
-              loading="lazy"
-            />
-            <div class="block-text">
-              <p class="skill-title" v-if="skill.name" v-html="sanitizeHtml(skill.name)"></p>
-              <p
-                class="skill-desc"
-                v-if="skill.description"
-                v-html="sanitizeHtml(skill.description)"
-              ></p>
+        <template v-for="section in skillSections" :key="section.key">
+          <div class="info-block" v-if="section.skills.length > 0">
+            <p class="block-title">{{ section.title }}:</p>
+            <div class="block-skill" v-for="skill in section.skills" :key="skill.id">
+              <img
+                v-if="skill.image_path"
+                :src="skill.preview_url ?? getImageUrl(skill.image_path) ?? ''"
+                class="block-skill-image"
+              />
+              <div class="block-text">
+                <p class="skill-title" v-if="skill.name" v-html="sanitizeHtml(skill.name)"></p>
+                <p
+                  class="skill-desc"
+                  v-if="skill.description"
+                  v-html="sanitizeHtml(skill.description)"
+                ></p>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </template>
     <div v-else>
@@ -193,6 +193,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
   opacity: 0;
 }
 .character-page {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -206,7 +207,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
     .info-block {
       padding: 0rem 0rem;
       border: 0.3rem solid var(--font-orange-05);
-      border-radius: 0.5rem;
+      border-radius: 3rem;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -215,6 +216,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
       align-items: flex-start;
       background-color: rgba(0, 0, 0, 0.781);
       overflow: hidden;
+      animation: fade-in 0.2s ease-in-out forwards;
 
       /* &.base-stats {
         .block-content {
@@ -248,8 +250,8 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           var(--font-orange-05),
           var(--skills-grid) 70%
         );
-        border: 0.3rem solid var(--font-orange-05);
-        border-radius: 0.5rem;
+        border-bottom: 0.3rem solid var(--font-orange-05);
+        /* border-radius: 0.5rem; */
         text-align: center;
         width: 100%;
       }
@@ -257,7 +259,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
       .block-skill {
         width: 100%;
         display: flex;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
         align-items: center;
         gap: 2rem;
         border: 0.3rem solid var(--font-orange-05);
@@ -272,6 +274,8 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           border: 0.3rem solid var(--skills-grid);
           object-fit: contain;
           object-position: center;
+
+          animation: fade-in 1s ease forwards;
         }
         .block-text {
           /* flex-grow: 1; */
@@ -279,12 +283,9 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           flex-direction: column;
           gap: 2rem;
           .skill-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            /* text-align: center; */
-
-            .skill-desc {
-            }
+            color: var(--font-orange);
           }
         }
 

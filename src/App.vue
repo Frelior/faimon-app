@@ -1,16 +1,15 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useCharactersStore } from './stores/characterStore'
 import { useRoute } from 'vue-router'
 import { getImageUrl } from './services/images'
 import { preloadImages } from './services/images'
-import { isFirstLoading, markAsLoaded } from './services/storage'
+// import { isFirstLoading, markAsLoaded } from './services/storage'
 import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
 import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
-
 const route = useRoute()
 const characetrStore = useCharactersStore()
 
@@ -23,15 +22,21 @@ async function prepareApp() {
 
   const preloadPromise = preloadImages(images)
 
-  if (isFirstLoading()) {
-    await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
-    markAsLoaded()
-  }
+  // if (isFirstLoading()) {
+  //   await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
+  //   markAsLoaded()
+  // }
+  await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
 
   isReady.value = true
 }
 
-prepareApp()
+watch(
+  () => characetrStore.characters,
+  () => {
+    if (!isReady.value && characetrStore.characters.length) prepareApp()
+  },
+)
 </script>
 
 <template>
@@ -71,9 +76,9 @@ prepareApp()
   animation: fade-in 1s ease forwards;
 
   .main-window {
-    min-width: 75%;
-    width: 75%;
-    height: 90%;
+    min-width: 70%;
+    width: 70%;
+    height: 95%;
     position: relative;
     overflow: hidden;
     align-self: flex-start;
@@ -116,7 +121,7 @@ prepareApp()
   .character-preview-box {
     /* border: 1px solid white; */
     flex-grow: 1;
-    height: 90%;
+    height: 95%;
     display: flex;
     justify-content: center;
     align-items: flex-end;

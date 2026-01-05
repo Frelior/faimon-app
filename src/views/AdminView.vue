@@ -14,9 +14,8 @@ async function logout() {
         <RouterLink class="link" to="/admin/edit-character"
           >Изменение/добавление персонажа</RouterLink
         >
-        <RouterLink class="link" to="/admin/edit-tierlist">Правки в тир-листе</RouterLink>
         <RouterLink class="link" to="/admin/edit-info">Правки в инфо блоке</RouterLink>
-        <button class="link" @click="logout">Выйти из админки</button>
+        <button class="link" @click="logout">Выйти из аккаунта</button>
       </div>
     </div>
 

@@ -102,16 +102,6 @@ onBeforeUnmount(() => {
 <template>
   <div class="view-container edit-character" v-if="currentCharacter">
     <div class="character-info">
-      <button
-        @click="
-          {
-            ;(console.log(currentCharacter), console.log(store.currentCharacterId))
-          }
-        "
-      >
-        object log
-      </button>
-
       <div class="header">
         <div class="selected">
           <p>Выбрано: {{ currentCharacter.name }}</p>
@@ -211,12 +201,16 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="btns">
-        <button class="btn save" @click="uploadCharacter">СОХРАНИТЬ ПЕРСОНАЖА</button>
+        <button :disabled="processing" class="btn save" @click="uploadCharacter">
+          {{ processing ? 'в процессе...' : 'СОХРАНИТЬ ПЕРСОНАЖА' }}
+        </button>
         <p v-if="processing">загрузочка...</p>
-        <button class="btn delete" @click="deleteCharacter">УДАЛИТЬ ПЕРСОНАЖА</button>
+        <button :disabled="processing" class="btn delete" @click="deleteCharacter">
+          {{ processing ? 'в процессе...' : 'УДАЛИТЬ ПЕРСОНАЖА' }}
+        </button>
       </div>
     </div>
-    <EditCharacterSkillsView />
+    <EditCharacterSkillsView v-if="selectedCharacterId > 0" />
   </div>
 </template>
 
@@ -279,10 +273,18 @@ onBeforeUnmount(() => {
       width: fit-content;
       cursor: pointer;
       &.save {
-        background-color: rgb(0, 196, 0);
+        background-color: rgb(0, 197, 0);
+        cursor: pointer;
+        &:hover {
+          background-color: rgb(0, 255, 0);
+        }
       }
       &.delete {
-        background-color: red;
+        background-color: rgb(196, 1, 1);
+        cursor: pointer;
+        &:hover {
+          background-color: rgb(255, 0, 0);
+        }
       }
     }
   }

@@ -155,22 +155,71 @@ async function saveChanges() {
   alert('Информация персонажа обновлена, перезагрузите страницу')
   isProcessing.value = false
 }
+
+type EditingTarget = {
+  skillId: string
+  field: 'name' | 'description'
+} | null
+const editing = ref<EditingTarget>(null)
+function startEdit(skill: Skill, field: 'name' | 'description') {
+  editing.value = { skillId: skill.client_id as string, field }
+}
+function stopEdit() {
+  editing.value = null
+}
 </script>
 
-<template>
-  <div class="edit-skills" v-if="store.currentCharacter?.id">
-    <button @click="(console.log(skillsObject), console.log(skillsToUpload))">skills log</button>
-    <button class="save-skills" @click="saveChanges">СОХРАНИТЬ СКИЛЛЫ</button>
-
-    <div class="section" v-for="(value, key) in skillsObject" :key="key">
-      <p class="title">{{ value.title }}</p>
+<template v-if="skillsObject">
+  <div id="view-head" class="edit-skills" v-if="store.currentCharacter?.id">
+    <h1>Редактирование скилов (нажми на поле для редактирования)</h1>
+    <div class="btns">
+      <button :disabled="isProcessing" class="save-skills" @click="saveChanges">
+        {{ isProcessing ? 'Сохранение...' : 'СОХРАНИТЬ СКИЛЛЫ' }}
+      </button>
+    </div>
+    <div class="info-block" v-for="(value, key) in skillsObject" :key="key">
+      <p class="block-title">{{ value.title }}</p>
       <div class="skills">
-        <div class="skill" v-for="skill in value.skills" :key="skill.client_id">
+        <div class="block-skill" v-for="skill in value.skills" :key="skill.client_id">
           <p v-if="key !== 'description'" class="skill-title">
             Запись №{{ value.skills.indexOf(skill) + 1 }}
           </p>
-          <p v-if="key !== 'description'" class="l-name">Название</p>
-          <QuillEditor
+          <div class="block-skill inner">
+            <p v-if="key !== 'description'" class="l-name">Название</p>
+            <!-- TEXT -->
+            <div
+              v-if="
+                key !== 'description' &&
+                !(editing?.skillId === skill.client_id && editing?.field === 'name')
+              "
+              class="editable-text"
+              v-html="skill.name || '<i>Кликните для редактирования</i>'"
+              @click="startEdit(skill, 'name')"
+            />
+            <!-- EDITOR -->
+            <QuillEditor
+              v-if="
+                key !== 'description' &&
+                editing?.skillId === skill.client_id &&
+                editing?.field === 'name'
+              "
+              theme="snow"
+              content-type="html"
+              :toolbar="[
+                'bold',
+                'italic',
+                'underline',
+                { header: 1 },
+                { header: 2 },
+                { color: [] },
+                { background: [] },
+                'link',
+              ]"
+              v-model:content="skill.name"
+              @blur="stopEdit"
+            />
+
+            <!-- <QuillEditor
             v-if="key !== 'description'"
             theme="snow"
             :content-type="'html'"
@@ -182,39 +231,81 @@ async function saveChanges() {
               { header: 2 },
               { color: [] },
               { background: [] },
+              'link',
             ]"
             v-model:content="skill.name"
-          />
-          <p class="l-name">Описание</p>
-          <QuillEditor
+          /> -->
+            <p class="l-name">Описание</p>
+            <!-- TEXT -->
+            <div
+              v-if="!(editing?.skillId === skill.client_id && editing?.field === 'description')"
+              class="editable-text"
+              v-html="skill.description || '<i>Кликните для редактирования</i>'"
+              @click="startEdit(skill, 'description')"
+            />
+
+            <!-- EDITOR -->
+            <QuillEditor
+              v-if="editing?.skillId === skill.client_id && editing?.field === 'description'"
+              theme="snow"
+              content-type="html"
+              :toolbar="[
+                'bold',
+                'italic',
+                'underline',
+                { header: 1 },
+                { header: 2 },
+                { color: [] },
+                { background: [] },
+                'link',
+              ]"
+              v-model:content="skill.description"
+              @blur="stopEdit"
+            />
+
+            <!-- <QuillEditor
             theme="snow"
             :content-type="'html'"
-            :toolbar="'full'"
+            :toolbar="[
+              'bold',
+              'italic',
+              'underline',
+              { header: 1 },
+              { header: 2 },
+              { color: [] },
+              { background: [] },
+              'link',
+            ]"
             v-model:content="skill.description"
-          />
-          <label
-            >Картинка
-            <span v-if="key === 'description'"
-              >Баннер в начале страницы, в оригинале 1600х1016</span
-            >
-            <span v-else>соотношение 1:1, типа 80х80 или 128х128</span>
-            <p>текущий путь: {{ skill.image_path }}</p>
+          /> -->
+          </div>
+          <div class="block-skill-buttons">
+            <p>
+              Картинка:
+              <span v-if="key === 'description'"
+                >Баннер в начале страницы, в оригинале 1600х1016</span
+              >
+              <span v-else>соотношение 1:1, типа 80х80 или 128х128</span>
+            </p>
+
+            <p v-if="skill.image_path">Загружена: {{ skill.image_path }}</p>
+            <p v-else>Отсутствует</p>
             <input
               type="file"
-              accept="image/png"
+              accept="image/*"
               @change="onImageChange($event, skill, 'skillIcons')"
               multiple="false"
             />
-          </label>
-          <button
-            class="del-btn"
-            @click="
-              (deleteSkill(skill, value.skills),
-              (value.skills = sortSkillsByOrderIndex(value.skills)))
-            "
-          >
-            УДАЛИТЬ СКИЛЛ
-          </button>
+            <button
+              class="del-btn"
+              @click="
+                (deleteSkill(skill, value.skills),
+                (value.skills = sortSkillsByOrderIndex(value.skills)))
+              "
+            >
+              УДАЛИТЬ СКИЛЛ
+            </button>
+          </div>
         </div>
         <button
           v-if="!(key === 'description' && value.skills.length >= 1)"
@@ -231,10 +322,13 @@ async function saveChanges() {
       </div>
     </div>
   </div>
-  <button class="save-skills" @click="saveChanges">СОХРАНИТЬ СКИЛЛЫ</button>
+  <button :disabled="isProcessing" class="save-skills" @click="saveChanges">
+    {{ isProcessing ? 'Сохранение...' : 'СОХРАНИТЬ СКИЛЛЫ' }}
+  </button>
   <p class="preview-title">ПРЕВЬЮ</p>
   <button @click="previewRenderKey++">Обновить превью</button>
   <CharacterPageView
+    id="view-preview"
     :key="previewRenderKey"
     v-if="skillsToUpload.length && store.currentCharacter"
     :previewCharacter="store.currentCharacter"
@@ -249,6 +343,11 @@ async function saveChanges() {
   padding: 0.5rem 2rem;
   width: fit-content;
   border-radius: 0.5rem;
+  background-color: rgb(0, 197, 0);
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(0, 255, 0);
+  }
 }
 .preview-title {
   text-align: center;
@@ -274,9 +373,13 @@ async function saveChanges() {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 5rem;
   border: 0.3rem solid var(--border-gray);
+  background-color: rgba(146, 146, 146, 0.281);
 
+  .btns {
+    display: flex;
+    justify-content: space-between;
+  }
   button {
     padding: 0.5rem 2rem;
     width: fit-content;
@@ -285,43 +388,103 @@ async function saveChanges() {
     &.del-btn {
       background-color: red;
       align-self: flex-end;
+      background-color: rgb(196, 1, 1);
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(255, 0, 0);
+      }
     }
     &.add-btn {
       background-color: rgb(0, 173, 0);
+      background-color: rgb(0, 197, 0);
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(0, 255, 0);
+      }
     }
   }
 
-  .section {
-    border: 0.5rem solid var(--font-orange);
+  .info-block {
+    box-shadow: 0 0 0.9rem 0.3rem black;
+    margin-bottom: 10rem;
+    position: relative;
+    padding: 0rem 0rem;
+    border: 0.3rem solid var(--font-orange-05);
+    border-radius: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
     .skills {
-      /* background-color: white; */
-      /* color: black; */
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 3rem;
 
-      .skill {
+      .block-skill {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        border: 1rem solid gray;
-        border: 0.5rem solid white;
-
+        border-radius: 1rem;
+        border: 0.5rem solid var(--font-orange-05);
+        padding: 1rem 2rem;
+        background-color: rgba(0, 0, 0, 0.555);
+        &.inner {
+          background-color: rgba(0, 0, 0, 0.781);
+          border: 0.3rem solid gray;
+        }
+        .editable-text {
+          cursor: pointer;
+          padding: 2rem 0rem;
+          &:hover {
+            text-decoration: underline;
+            background-color: rgba(255, 255, 255, 0.192);
+          }
+        }
         .skill-title {
           text-align: center;
-          background-color: gray;
+          background: linear-gradient(to right, transparent 10%, gray, transparent 90%);
           font-size: 2rem;
         }
         .l-name {
           text-align: center;
-          background-color: gray;
+          background: linear-gradient(to right, transparent 30%, gray, transparent 70%);
+        }
+        .block-skill-buttons {
+          display: flex;
+          flex-direction: column;
+          input {
+            margin: 1rem 0rem;
+            padding: 0.5rem 2rem;
+            width: fit-content;
+            border-radius: 0.5rem;
+            background-color: rgba(0, 197, 0, 0.144);
+            cursor: pointer;
+            &:hover {
+              background-color: rgba(0, 255, 0, 0.267);
+            }
+          }
         }
       }
     }
-    .title {
+    .block-title {
+      position: sticky;
+      top: 0;
+      align-self: center;
       font-size: 2rem;
-      border: 0.3rem solid wheat;
+      padding: 0.3rem 0rem;
+      background: linear-gradient(
+        to right,
+        var(--skills-grid) 0%,
+        var(--font-orange-05),
+        var(--skills-grid) 70%
+      );
+      border: 0.3rem solid var(--font-orange-05);
+      border-radius: 0.5rem;
       text-align: center;
-      background-color: var(--font-orange-05);
+      width: 100%;
     }
   }
 }
