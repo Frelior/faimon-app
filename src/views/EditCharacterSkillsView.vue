@@ -312,7 +312,7 @@ function stopEdit() {
           class="add-btn"
           @click="
             (value.skills.push(
-              createNewSkill(store.currentCharacter.id, key, value.skills.length + 1),
+              createNewSkill(store.currentCharacter.id, String(key), value.skills.length + 1),
             ),
             (value.skills = sortSkillsByOrderIndex(value.skills)))
           "
