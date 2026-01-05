@@ -2,9 +2,15 @@
 import { supabase } from '@/lib/supabaseClient'
 
 async function login() {
-  await supabase.auth.signInWithOAuth({
-    provider: 'discord',
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+  
   })
+  if (error) {
+    console.error(error)
+    return
+  }
+  console.log(data)
 }
 </script>
 

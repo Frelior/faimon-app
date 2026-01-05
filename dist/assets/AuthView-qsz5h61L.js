@@ -1,1 +1,0 @@
-import{e as a,c as t,a as o,x as s,o as n,_ as c}from"./index-DxrRgHfT.js";const i={class:"view-container auth-view"},r=a({__name:"AuthView",setup(_){async function e(){await s.auth.signInWithOAuth({provider:"discord"})}return(u,d)=>(n(),t("div",i,[o("button",{onClick:e},"Войти с помощью Discord")]))}}),h=c(r,[["__scopeId","data-v-a2234a4a"]]);export{h as default};
