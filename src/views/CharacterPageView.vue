@@ -1,33 +1,30 @@
 <script setup lang="ts">
 import { useCharactersStore } from '@/stores/characterStore'
-import { useRouter } from 'vue-router'
 import { computed, ref, watch } from 'vue'
+import { sanitizeHtml } from '@/services/utility'
 import LoadingComponent from '@/components/LoadingComponent/LoadingComponent.vue'
-import { getCharacterSkills } from '@/services/getCharacterSkills'
-import { getSkillsByType } from '@/services/getSkillsByType'
-import { getImageUrl } from '@/services/getImageUrl'
-import type { Skill } from '@/interfaces/interfaces'
+import { getCharacterSkills } from '@/services/skills'
+import { getSkillsByType } from '@/services/skills'
+import { getImageUrl } from '@/services/images'
+import type { Character, Skill } from '@/interfaces/interfaces'
 
 const props = defineProps<{
-  id: string
+  id?: string
+  previewSkills?: Skill[]
+  previewCharacter?: Character
 }>()
 const characterStore = useCharactersStore()
-const router = useRouter()
 const character = computed(() => {
+  if (props.previewCharacter) return props.previewCharacter
   characterStore.changeCurrentCharacterId(Number(props.id))
   const char = characterStore.currentCharacter
-
-  if (!char) {
-    router.replace({ name: 'not-found' })
-    return
-  }
   return char
 })
-const skills = ref<Skill[]>([])
+const skills = ref<Skill[]>(props.previewSkills ?? [])
 watch(
   character,
   async () => {
-    if (character.value) {
+    if (!props.previewSkills && character.value) {
       const data = await getCharacterSkills(character.value.id)
       skills.value = data ?? []
       console.log(data)
@@ -35,6 +32,7 @@ watch(
   },
   { immediate: true },
 )
+
 const skillSections = computed(() => [
   {
     key: 'attack',
@@ -86,7 +84,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
 </script>
 
 <template>
-  <div class="view-container character-page">
+  <div :class="{ 'view-container': !props.previewSkills }" class="character-page">
     <template v-if="character && skills.length > 0">
       <div class="body">
         <!-- <div class="info-block base-stats">
@@ -138,33 +136,44 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
             :key="description.id"
           >
             <div class="block-text">
-              <p class="skill-title" v-if="description.name">{{ description.name }}</p>
-              <p class="skill-desc" v-if="description.description">
-                {{ description.description }}
-              </p>
+              <p
+                class="skill-title"
+                v-if="description.name"
+                v-html="sanitizeHtml(description.name)"
+              ></p>
+              <p
+                class="skill-desc"
+                v-if="description.description"
+                v-html="sanitizeHtml(description.description)"
+              ></p>
             </div>
             <img
-              v-if="getImageUrl(description.image_path)"
-              :src="getImageUrl(description.image_path) ?? ''"
+              v-if="description.image_path"
+              :src="description.preview_url ?? getImageUrl(description.image_path) ?? ''"
               class="block-skill-image"
             />
           </div>
         </div>
-
-        <div class="info-block" v-for="section in skillSections" :key="section.key">
-          <p class="block-title">{{ section.title }}:</p>
-          <div class="block-skill" v-for="skill in section.skills" :key="skill.id">
-            <img
-              v-if="getImageUrl(skill.image_path)"
-              :src="getImageUrl(skill.image_path) ?? ''"
-              class="block-skill-image"
-            />
-            <div class="block-text">
-              <p class="skill-title" v-if="skill.name">{{ skill.name }}</p>
-              <p class="skill-desc" v-if="skill.description">{{ skill.description }}</p>
+        <template v-for="section in skillSections" :key="section.key">
+          <div class="info-block" v-if="section.skills.length > 0">
+            <p class="block-title">{{ section.title }}:</p>
+            <div class="block-skill" v-for="skill in section.skills" :key="skill.id">
+              <img
+                v-if="skill.image_path"
+                :src="skill.preview_url ?? getImageUrl(skill.image_path) ?? ''"
+                class="block-skill-image"
+              />
+              <div class="block-text">
+                <p class="skill-title" v-if="skill.name" v-html="sanitizeHtml(skill.name)"></p>
+                <p
+                  class="skill-desc"
+                  v-if="skill.description"
+                  v-html="sanitizeHtml(skill.description)"
+                ></p>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
     </template>
     <div v-else>
@@ -184,6 +193,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
   opacity: 0;
 }
 .character-page {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -197,14 +207,16 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
     .info-block {
       padding: 0rem 0rem;
       border: 0.3rem solid var(--font-orange-05);
-      border-radius: 0.5rem;
+      border-radius: 3rem;
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      gap: 1rem;
       align-items: flex-start;
       background-color: rgba(0, 0, 0, 0.781);
       overflow: hidden;
+      animation: fade-in 0.2s ease-in-out forwards;
 
       /* &.base-stats {
         .block-content {
@@ -232,7 +244,14 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
         align-self: center;
         font-size: 2rem;
         padding: 0.3rem 0rem;
-        background-color: var(--skills-grid);
+        background: linear-gradient(
+          to right,
+          var(--skills-grid) 30%,
+          var(--font-orange-05),
+          var(--skills-grid) 70%
+        );
+        border-bottom: 0.3rem solid var(--font-orange-05);
+        /* border-radius: 0.5rem; */
         text-align: center;
         width: 100%;
       }
@@ -240,7 +259,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
       .block-skill {
         width: 100%;
         display: flex;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
         align-items: center;
         gap: 2rem;
         border: 0.3rem solid var(--font-orange-05);
@@ -255,6 +274,8 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           border: 0.3rem solid var(--skills-grid);
           object-fit: contain;
           object-position: center;
+
+          animation: fade-in 1s ease forwards;
         }
         .block-text {
           /* flex-grow: 1; */
@@ -262,12 +283,9 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           flex-direction: column;
           gap: 2rem;
           .skill-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            /* text-align: center; */
-
-            .skill-desc {
-            }
+            color: var(--font-orange);
           }
         }
 

@@ -1,7 +1,6 @@
 @import url('/src/styles/fonts/fonts.css');
 @import url('/src/styles/colors.css');
 @import url('/src/styles/reset.css');
-
 html {
   font-family: 'Roboto', Arial, sans-serif;
   color: white;
@@ -51,34 +50,43 @@ body {
 }
 
 a {
-  color: var(--font-orange);
-  text-decoration: none;
-  font-family: 'Unbounded', sans-serif;
-  font-weight: 400;
-  transition:
-    transform 0.2s ease,
-    font-variation-settings 0.2s ease,
-    opacity 0.2s ease;
-
-  font-size: 2.5rem;
-  opacity: 0.9;
-  line-height: 5rem;
-  text-align: right;
-  margin-right: 1rem;
-  cursor: pointer;
-  transform-origin: right center;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  &.active {
-    transform: scale(1.4);
-    font-weight: 600;
-    opacity: 1;
-  }
+  text-decoration: underline;
+  color: inherit;
 
   &:hover {
-    text-shadow: 0 0 1px var(--font-orange);
+    color: var(--font-orange);
+  }
+
+  &.link {
+    color: var(--font-orange);
+    text-decoration: none;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 400;
+    transition:
+      transform 0.2s ease,
+      font-variation-settings 0.2s ease,
+      opacity 0.2s ease;
+
+    font-size: 2.5rem;
+    opacity: 0.9;
+    line-height: 5rem;
+    text-align: right;
+    margin-right: 1rem;
+    cursor: pointer;
+    transform-origin: right center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    &.active {
+      transform: scale(1.4);
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    &:hover {
+      text-shadow: 0 0 1px var(--font-orange);
+    }
   }
 }
 

@@ -1,39 +1,42 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useCharactersStore } from './stores/characterStore'
 import { useRoute } from 'vue-router'
-import { getImageUrl } from './services/getImageUrl'
-import { preloadImages } from './services/preloadImages'
-import { isFirstLoading, markAsLoaded } from './services/isFirstLoading'
+import { getImageUrl } from './services/images'
+import { preloadImages } from './services/images'
+// import { isFirstLoading, markAsLoaded } from './services/storage'
 import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
 import BackgroundComponent from './components/BackgroundComponent/BackgroundComponent.vue'
 import CharacterPreviewComponent from './components/CharacterPreviewComponent/CharacterPreviewComponent.vue'
-
 const route = useRoute()
 const characetrStore = useCharactersStore()
 
 const isReady = ref(false)
 
 async function prepareApp() {
-  await characetrStore.fetchAllCharacters()
-
   const images = characetrStore.characters
     .map((c) => getImageUrl(c.image_full_path))
     .filter((url): url is string => Boolean(url))
 
   const preloadPromise = preloadImages(images)
 
-  if (isFirstLoading()) {
-    await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
-    markAsLoaded()
-  }
+  // if (isFirstLoading()) {
+  //   await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
+  //   markAsLoaded()
+  // }
+  await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
 
   isReady.value = true
 }
 
-prepareApp()
+watch(
+  () => characetrStore.characters,
+  () => {
+    if (!isReady.value && characetrStore.characters.length) prepareApp()
+  },
+)
 </script>
 
 <template>
@@ -52,7 +55,10 @@ prepareApp()
       <transition name="fade-slow">
         <div
           v-if="
-            route.name === 'characters' || route.name === 'character' || route.name === 'tierlist'
+            route.name === 'characters' ||
+            route.name === 'character' ||
+            route.name === 'tierlist' ||
+            route.name === 'edit-character'
           "
           class="character-preview-box"
         >
@@ -70,15 +76,16 @@ prepareApp()
   animation: fade-in 1s ease forwards;
 
   .main-window {
-    min-width: 65%;
-    width: 65%;
-    height: 90%;
+    min-width: 70%;
+    width: 70%;
+    height: 95%;
     position: relative;
     overflow: hidden;
     align-self: flex-start;
     background-color: rgba(0, 0, 0, 0.397);
     padding-bottom: 5rem;
     padding-top: 1rem;
+    z-index: -5;
 
     &::before {
       content: '';
@@ -114,7 +121,7 @@ prepareApp()
   .character-preview-box {
     /* border: 1px solid white; */
     flex-grow: 1;
-    height: 90%;
+    height: 95%;
     display: flex;
     justify-content: center;
     align-items: flex-end;

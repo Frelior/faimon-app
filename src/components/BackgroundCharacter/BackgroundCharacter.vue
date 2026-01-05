@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useCharactersStore } from '@/stores/characterStore'
-import { getImageUrl } from '@/services/getImageUrl'
+import { getImageUrl } from '@/services/images'
 
 const store = useCharactersStore()
 const imageUrl = computed(
@@ -20,7 +20,7 @@ onMounted(() => {
         <img
           v-if="store.currentCharacterId"
           :key="store.currentCharacterId"
-          :src="imageUrl || ''"
+          :src="store.editViewCharacterImageUrl || imageUrl || ''"
         />
       </Transition>
     </div>
@@ -31,7 +31,7 @@ onMounted(() => {
 .bg-image-character {
   position: fixed;
   bottom: 0;
-  right: 0;
+  right: -5%;
   width: 60vw;
   height: 80%;
   z-index: -9;
