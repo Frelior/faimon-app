@@ -111,6 +111,8 @@ const iconUrl = computed(() => {
     border-radius: 1rem;
 
     img {
+      border-radius: 1rem;
+
       clip-path: none;
       object-fit: cover;
     }
