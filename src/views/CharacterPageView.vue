@@ -232,7 +232,7 @@ watch(
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      gap: 1rem;
+      /* gap: 1rem; */
       align-items: flex-start;
       background-color: rgba(0, 0, 0, 0.781);
       overflow: hidden;
@@ -282,7 +282,7 @@ watch(
         border-radius: 0.5rem;
         align-items: center;
         gap: 2rem;
-        border: 0.3rem solid var(--font-orange-05);
+        border-bottom: 0.3rem solid var(--font-orange-05);
         padding: 1rem 2rem;
 
         .block-skill-image {
