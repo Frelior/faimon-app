@@ -61,6 +61,7 @@ const type = computed(() => characterObject.value!.type)
     .styled-title {
       font-size: 5rem;
       font-family: 'Capture It';
+      letter-spacing: 0.2rem;
       font-weight: 500;
     }
   }

@@ -21,6 +21,8 @@ const character = computed(() => {
   return char
 })
 const skills = ref<Skill[]>(props.previewSkills ?? [])
+const isDescriptionImageLoaded = ref(false)
+
 watch(
   character,
   async () => {
@@ -81,12 +83,29 @@ const skillSections = computed(() => [
   },
 ])
 const descriptionSection = computed(() => getSkillsByType(skills.value, 'description'))
+watch(
+  skills,
+  (val) => {
+    if (!val.length) return
+
+    const descriptions = getSkillsByType(val, 'description')
+
+    if (!descriptions.length || !descriptions[0]?.image_path) {
+      // Нет картинки — считаем, что всё загружено
+      isDescriptionImageLoaded.value = true
+    } else {
+      // Есть картинка — ждём событие @load
+      isDescriptionImageLoaded.value = false
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
   <div :class="{ 'view-container': !props.previewSkills }" class="character-page">
     <template v-if="character && skills.length > 0">
-      <div class="body">
+      <div class="body" v-show="isDescriptionImageLoaded">
         <!-- <div class="info-block base-stats">
         <p class="block-title">Base stats:</p>
 
@@ -151,6 +170,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
               v-if="description.image_path"
               :src="description.preview_url ?? getImageUrl(description.image_path) ?? ''"
               class="block-skill-image"
+              @load="isDescriptionImageLoaded = true"
             />
           </div>
         </div>
@@ -216,7 +236,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
       align-items: flex-start;
       background-color: rgba(0, 0, 0, 0.781);
       overflow: hidden;
-      animation: fade-in 0.2s ease-in-out forwards;
+      animation: fade-in 0.1s ease-in-out forwards;
 
       /* &.base-stats {
         .block-content {
@@ -275,7 +295,7 @@ const descriptionSection = computed(() => getSkillsByType(skills.value, 'descrip
           object-fit: contain;
           object-position: center;
 
-          animation: fade-in 1s ease forwards;
+          /* animation: fade-in 1s ease forwards; */
         }
         .block-text {
           /* flex-grow: 1; */

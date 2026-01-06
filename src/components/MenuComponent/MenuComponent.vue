@@ -140,7 +140,7 @@ onBeforeUnmount(() => {
       background-color: var(--font-orange);
       transform: translateY(-50%);
       transition: transform 0.2s ease;
-      will-change: transform;
+      /* will-change: transform; */
     }
   }
 }
