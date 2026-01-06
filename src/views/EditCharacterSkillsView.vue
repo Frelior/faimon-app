@@ -9,7 +9,13 @@ import {
   createNewSkill,
   sortSkillsByOrderIndex,
 } from '@/services/skills'
-import { generateImagePath, uploadImage, deleteImage, setPreview } from '@/services/images'
+import {
+  generateImagePath,
+  uploadImage,
+  deleteImage,
+  setPreview,
+  getImageUrl,
+} from '@/services/images'
 import { computed, reactive, ref, watch } from 'vue'
 import type { Skill } from '@/interfaces/interfaces'
 const store = useCharactersStore()
@@ -80,6 +86,13 @@ function onImageChange(
   }
   skill.image_path = path
   skill.preview_url = setPreview(newImage, skill?.preview_url)
+}
+function onImageDelete(skill: Skill) {
+  if (skill.image_path) {
+    oldImagePathes.value.push(skill.image_path)
+  }
+  skill.image_path = ''
+  skill.preview_url = ''
 }
 async function saveChanges() {
   const confirm = window.confirm('Вы уверены, что хотите сохранить изменения скилов?')
@@ -218,23 +231,6 @@ function stopEdit() {
               v-model:content="skill.name"
               @blur="stopEdit"
             />
-
-            <!-- <QuillEditor
-            v-if="key !== 'description'"
-            theme="snow"
-            :content-type="'html'"
-            :toolbar="[
-              'bold',
-              'italic',
-              'underline',
-              { header: 1 },
-              { header: 2 },
-              { color: [] },
-              { background: [] },
-              'link',
-            ]"
-            v-model:content="skill.name"
-          /> -->
             <p class="l-name">Описание</p>
             <!-- TEXT -->
             <div
@@ -243,7 +239,6 @@ function stopEdit() {
               v-html="skill.description || '<i>Кликните для редактирования</i>'"
               @click="startEdit(skill, 'description')"
             />
-
             <!-- EDITOR -->
             <QuillEditor
               v-if="editing?.skillId === skill.client_id && editing?.field === 'description'"
@@ -262,22 +257,6 @@ function stopEdit() {
               v-model:content="skill.description"
               @blur="stopEdit"
             />
-
-            <!-- <QuillEditor
-            theme="snow"
-            :content-type="'html'"
-            :toolbar="[
-              'bold',
-              'italic',
-              'underline',
-              { header: 1 },
-              { header: 2 },
-              { color: [] },
-              { background: [] },
-              'link',
-            ]"
-            v-model:content="skill.description"
-          /> -->
           </div>
           <div class="block-skill-buttons">
             <p>
@@ -290,12 +269,20 @@ function stopEdit() {
 
             <p v-if="skill.image_path">Загружена: {{ skill.image_path }}</p>
             <p v-else>Отсутствует</p>
+            <img
+              v-if="skill.image_path || skill.preview_url"
+              :src="skill.preview_url || getImageUrl(skill.image_path) || ''"
+              class="block-skill-image"
+            />
             <input
               type="file"
               accept="image/*"
               @change="onImageChange($event, skill, 'skillIcons')"
               multiple="false"
             />
+            <button v-if="skill.image_path" @click="onImageDelete(skill)">
+              Удалить картинку с сервера
+            </button>
             <button
               class="del-btn"
               @click="
@@ -465,6 +452,17 @@ function stopEdit() {
             &:hover {
               background-color: rgba(0, 255, 0, 0.267);
             }
+          }
+
+          .block-skill-image {
+            flex-shrink: 0;
+            width: 7rem;
+            height: 7rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 0.3rem solid var(--skills-grid);
+            object-fit: contain;
+            object-position: center;
           }
         }
       }

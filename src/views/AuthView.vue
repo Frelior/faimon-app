@@ -1,17 +1,5 @@
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
-
-async function login() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
-  
-  })
-  if (error) {
-    console.error(error)
-    return
-  }
-  console.log(data)
-}
+import { login } from '@/lib/supabaseClient'
 </script>
 
 <template>
