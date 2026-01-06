@@ -154,7 +154,7 @@ watch(
             v-for="description in descriptionSection"
             :key="description.id"
           >
-            <div class="block-text">
+            <div class="block-text" v-if="description.description">
               <p
                 class="skill-title"
                 v-if="description.name"
