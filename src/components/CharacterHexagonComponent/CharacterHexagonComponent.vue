@@ -54,6 +54,7 @@ const iconUrl = computed(() => {
   justify-content: center;
   align-items: center;
   user-select: none;
+  will-change: transform;
 
   &.sr {
     background: linear-gradient(180deg, rgb(68, 68, 68) 35%, rgb(15, 15, 15) 75%, var(--sr) 85%);
@@ -76,23 +77,26 @@ const iconUrl = computed(() => {
     content: '';
     position: absolute;
     opacity: 0.5;
-    width: 200%;
-    height: 5rem;
+    width: 100%;
+    height: 2rem;
     background: white;
-    top: -50%;
+    top: 0%;
     right: 0%;
     z-index: 1;
-    transform: translate(50%, -50%) rotate(45deg);
+    transform: translate(50%, -100%) rotate(45deg);
+    transform-origin: center;
     transition:
-      transform 0.2s,
-      top 0.2s,
-      right 0.2s;
+      transform 0.3s,
+      top 0.3s,
+      right 0.3s;
+    will-change: transform, top, right;
   }
 
   &:hover:before,
   &:focus:before {
-    top: 150%;
+    top: 100%;
     right: 100%;
+    transform: translate(50%, 0%) rotate(45deg);
   }
   img {
     width: 100%;
@@ -118,6 +122,14 @@ const iconUrl = computed(() => {
 
     .router-link {
       clip-path: none;
+    }
+
+    &:before {
+      width: 200%;
+      transition:
+        transform 0.2s,
+        top 0.2s,
+        right 0.2s;
     }
   }
 }
