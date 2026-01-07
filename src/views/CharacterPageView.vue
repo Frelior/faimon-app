@@ -147,7 +147,7 @@ watch(
         </div>
       </div> -->
 
-        <div class="info-block" v-if="descriptionSection">
+        <div class="info-block" v-if="descriptionSection.length">
           <p class="block-title">Общее:</p>
           <div
             class="block-skill description"

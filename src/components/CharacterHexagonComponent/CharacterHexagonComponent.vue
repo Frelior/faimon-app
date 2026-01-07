@@ -60,7 +60,6 @@ const iconUrl = computed(() => {
   }
   &.ssr {
     background: linear-gradient(180deg, rgb(68, 68, 68) 35%, rgb(15, 15, 15) 75%, var(--ssr) 85%);
-    /* background: var(--ssr); */
   }
 
   &:hover,

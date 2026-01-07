@@ -2,17 +2,37 @@
 import CharacterHexagonComponent from '@/components/CharacterHexagonComponent/CharacterHexagonComponent.vue'
 import { useCharactersStore } from '@/stores/characterStore'
 import FiltersComponent from '@/components/FiltersComponent/FiltersComponent.vue'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const isCardsView = ref(false)
 const charactersStore = useCharactersStore()
 const filteredCharacters = computed(() => charactersStore.filteredCharacters)
+
+function toggleCardsView() {
+  const localStorageValue = localStorage.getItem('isCardsView')
+  console.log(localStorageValue)
+
+  isCardsView.value = !isCardsView.value
+  localStorage.setItem('isCardsView', `${isCardsView.value}`)
+}
+onMounted(() => {
+  const localStorageValue = localStorage.getItem('isCardsView')
+  console.log(localStorageValue)
+
+  if (localStorageValue === null) {
+    isCardsView.value = false
+    localStorage.setItem('isCardsView', 'false')
+    console.log(localStorageValue)
+  } else {
+    isCardsView.value = localStorageValue === 'true'
+  }
+})
 </script>
 
 <template>
   <div class="view-container">
     <FiltersComponent />
-    <div class="toggler" @click="isCardsView = !isCardsView" :class="{ on: isCardsView }"></div>
+    <div class="toggler" @click="toggleCardsView" :class="{ on: isCardsView }"></div>
     <div class="characters-view" :class="{ cards: isCardsView }">
       <CharacterHexagonComponent
         v-for="character in filteredCharacters"

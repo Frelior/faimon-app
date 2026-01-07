@@ -114,7 +114,7 @@ const tierD = computed(() => characters.value.filter((character) => character.ti
         font-size: 10rem;
         text-align: center;
         text-shadow: 0 0 2rem var(--shadow);
-        font-family: 'Londrina Shadow', sans-serif;
+        font-family: 'Londrina Shadow','Unbounded', sans-serif;
         padding: 1rem;
 
         .s & {

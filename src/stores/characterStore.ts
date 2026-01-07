@@ -1,7 +1,7 @@
 import { ref, reactive, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import type { Character, Filters, Skill } from '@/interfaces/interfaces'
-import { randomInt } from '@/services/utility'
+import { getRandomFromArray } from '@/services/utility'
 import { fetchAllCharacters, createNewCharacter } from '@/services/characters'
 
 export const useCharactersStore = defineStore('charactersStore', () => {
@@ -12,7 +12,12 @@ export const useCharactersStore = defineStore('charactersStore', () => {
   const characters = ref<Character[]>([])
   const currentCharacterId = ref(0)
   const currentCharacter = computed(() => {
-    console.log(characters.value.find((character) => character.id === currentCharacterId.value))
+    console.log(
+      characters.value.find((character) => {
+        return character.id === currentCharacterId.value
+      }),
+    )
+    console.log(currentCharacterId.value)
     if (currentCharacterId.value === -1) return newCharacter
     return characters.value.find(
       (character: Character) => character.id === currentCharacterId.value,
@@ -48,8 +53,9 @@ export const useCharactersStore = defineStore('charactersStore', () => {
   onMounted(async () => {
     const data = await fetchAllCharacters()
     if (data?.length) {
-      currentCharacterId.value = randomInt(1, data.length)
+      const characterIds = data.map((character) => character.id)
       characters.value = data
+      currentCharacterId.value = getRandomFromArray(characterIds as number[]) || 3
     }
   })
 

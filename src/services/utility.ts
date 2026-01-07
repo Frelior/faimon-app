@@ -10,6 +10,11 @@ export function formatDate(date: string | undefined): string {
 export function randomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
+export function getRandomFromArray(arr: number[]): number | undefined {
+  if (arr.length === 0) return undefined
+  const randomIndex = Math.floor(Math.random() * arr.length)
+  return arr[randomIndex]
+}
 
 export function setClientId<T extends { client_id?: string | null }>(obj: T): T {
   return {

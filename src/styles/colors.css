@@ -1,7 +1,8 @@
 :root {
   --black: rgb(16, 16, 20);
-  --font-orange: rgb(255, 150, 52);
+  --font-orange: #ed712d;
   --font-orange-05: rgba(238, 113, 46, 0.5);
+  --gray-blue: #7d94a5;
   --font-gray: rgb(143, 143, 143);
   --border-gray: rgb(56, 56, 56);
   --skills-grid: rgb(43, 43, 43);

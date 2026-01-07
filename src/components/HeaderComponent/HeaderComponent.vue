@@ -11,10 +11,15 @@ const authStore = useAuthStore()
       <RouterLink to="/" class="logo"
         ><img src="/src/media/icons/logo.png" tabindex="0"
       /></RouterLink>
-      <button class="logout" v-if="authStore.isAuthenticated" @click="authStore.logout">
-        Выйти
-      </button>
-      <SocialLinks />
+      <div class="nav">
+        <RouterLink to="/admin" class="admin-btn" v-if="authStore.isAuthenticated">
+          Админ
+        </RouterLink>
+        <button class="admin-btn" v-if="authStore.isAuthenticated" @click="authStore.logout">
+          Выйти
+        </button>
+        <SocialLinks />
+      </div>
     </div>
   </div>
 </template>
@@ -34,19 +39,27 @@ const authStore = useAuthStore()
     height: 100%;
     width: 100%;
 
-    .logout {
-      margin-right: 1rem;
-      font-size: 1rem;
-      border: 0.2rem solid var(--font-orange-05);
-      color: var(--font-orange);
-      width: fit-content;
-      margin-left: auto;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      background-color: transparent;
-      cursor: pointer;
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.192);
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .admin-btn {
+        text-decoration: none;
+        font-size: 1rem;
+        border: 0.2rem solid var(--font-orange-05);
+        color: var(--font-orange);
+        width: fit-content;
+        height: fit-content;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.192);
+        }
+        &.logout {
+        }
       }
     }
 

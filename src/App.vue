@@ -4,7 +4,6 @@ import { useCharactersStore } from './stores/characterStore'
 import { useRoute } from 'vue-router'
 import { getImageUrl } from './services/images'
 import { preloadImages } from './services/images'
-// import { isFirstLoading, markAsLoaded } from './services/storage'
 import LoadingComponent from './components/LoadingComponent/LoadingComponent.vue'
 import MenuComponent from './components/MenuComponent/MenuComponent.vue'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
@@ -22,10 +21,6 @@ async function prepareApp() {
 
   const preloadPromise = preloadImages(images)
 
-  // if (isFirstLoading()) {
-  //   await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
-  //   markAsLoaded()
-  // }
   await Promise.race([preloadPromise, new Promise((r) => setTimeout(r, 2000))])
 
   isReady.value = true
@@ -68,6 +63,11 @@ watch(
     </div>
   </template>
   <div v-else><LoadingComponent fullscreen /></div>
+  <div class="font-crutch">
+    <span class="roboto">a</span>
+    <span class="londrina-shadow">b</span>
+    <span class="capture-it">c</span>
+  </div>
 </template>
 
 <style scoped>
@@ -93,17 +93,17 @@ watch(
       inset: 0;
       padding: 0.4rem; /* толщина бордера */
       pointer-events: none;
+      border-radius: 3rem;
 
       background: linear-gradient(
-        45deg,
-        var(--font-gray),
-        var(--font-gray),
+        70deg,
+        #7d94a5,
+        #7d94a5,
         transparent,
         transparent,
-        var(--font-orange),
         transparent,
         transparent,
-        var(--font-gray),
+        transparent,
         transparent,
         transparent,
         var(--font-orange),
@@ -143,6 +143,22 @@ watch(
   .fade-slow-enter-from,
   .fade-slow-leave-to {
     opacity: 0;
+  }
+}
+.font-crutch {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+
+  .roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+  .londrina-shadow {
+    font-family: 'Londrina Shadow', sans-serif;
+  }
+  .capture-it {
+    font-family: 'Capture It', sans-serif;
   }
 }
 </style>
