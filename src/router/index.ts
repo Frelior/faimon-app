@@ -44,19 +44,19 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue'),
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, requiresAdmin: true },
       children: [
         {
           path: 'edit-info',
           name: 'edit-info',
           component: () => import('../views/EditInfoView.vue'),
-          meta: { requiresAuth: true },
+          meta: { requiresAuth: true, requiresAdmin: true },
         },
         {
           path: 'edit-character',
           name: 'edit-character',
           component: () => import('../views/EditCharacterView.vue'),
-          meta: { requiresAuth: true },
+          meta: { requiresAuth: true, requiresAdmin: true },
         },
       ],
     },
@@ -65,7 +65,9 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin)
 
+  // Если маршрут не требует авторизации — пускаем
   if (!requiresAuth) {
     next()
     return
@@ -75,9 +77,25 @@ router.beforeEach(async (to, from, next) => {
     data: { session },
   } = await supabase.auth.getSession()
 
+  // Если не залогинен — на страницу логина
   if (!session) {
     next({ name: 'auth' })
     return
+  }
+
+  // Если требуется админ — проверяем роль
+  if (requiresAdmin) {
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .single()
+
+    if (error || profile?.role !== 'admin') {
+      // Не админ → редирект, например на главную
+      next({ name: 'characters' })
+      return
+    }
   }
 
   next()
