@@ -41,7 +41,6 @@ const iconUrl = computed(() => {
   --height: 15rem;
   --border-width: 0.5rem;
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-
   padding: var(--border-width);
   background: linear-gradient(180deg, rgb(201, 201, 201), rgb(20, 20, 20));
   width: var(--width);
@@ -78,25 +77,19 @@ const iconUrl = computed(() => {
     position: absolute;
     opacity: 0.5;
     width: 100%;
-    height: 2rem;
+    height: 3rem;
     background: white;
     top: 0%;
     right: 0%;
     z-index: 1;
     transform: translate(50%, -100%) rotate(45deg);
     transform-origin: center;
-    transition:
-      transform 0.3s,
-      top 0.3s,
-      right 0.3s;
-    will-change: transform, top, right;
+    transition: transform 0.2s ease-in-out;
   }
 
   &:hover:before,
   &:focus:before {
-    top: 100%;
-    right: 100%;
-    transform: translate(50%, 0%) rotate(45deg);
+    transform: translate(-50%, 700%) rotate(45deg);
   }
   img {
     width: 100%;
@@ -126,10 +119,7 @@ const iconUrl = computed(() => {
 
     &:before {
       width: 200%;
-      transition:
-        transform 0.2s,
-        top 0.2s,
-        right 0.2s;
+      transition: transform 0.2s ease-in-out;
     }
   }
 }

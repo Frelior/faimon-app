@@ -109,8 +109,8 @@ watch(
         var(--font-orange),
         var(--font-orange)
       );
-      background-size: 200% 200%;
-      animation: border-flow 60s ease-in-out infinite;
+      background-size: 100% 100%;
+      /* animation: border-flow 10s ease-in-out infinite; */
       mask:
         linear-gradient(#000 0 0) content-box,
         linear-gradient(#000 0 0);

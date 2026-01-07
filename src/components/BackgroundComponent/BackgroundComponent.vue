@@ -11,10 +11,10 @@ import BackgroundCharacter from '../BackgroundCharacter/BackgroundCharacter.vue'
       muted
       playsinline
       preload="auto"
-      type="video/mp4"
+      type="video/webm"
       webkit-playsinline
       poster="/src/media/images/bg-static.png"
-      src="https://pgaorpxhhndfvyajdwhx.supabase.co/storage/v1/object/public/media/video/bg-video.mp4"
+      src="/src/media/video/bg-video.webm"
     ></video>
     <div class="vignette"></div>
     <BackgroundCharacter />
@@ -24,7 +24,7 @@ import BackgroundCharacter from '../BackgroundCharacter/BackgroundCharacter.vue'
 
 <style scoped>
 .background {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -41,7 +41,7 @@ import BackgroundCharacter from '../BackgroundCharacter/BackgroundCharacter.vue'
   .bg-video {
     user-select: none;
     pointer-events: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -50,7 +50,7 @@ import BackgroundCharacter from '../BackgroundCharacter/BackgroundCharacter.vue'
     z-index: -10;
   }
   .mask {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
