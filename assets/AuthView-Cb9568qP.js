@@ -1,0 +1,1 @@
+import{e as a,c as n,a as c,u as t,z as o,o as r,_ as i}from"./index-Te2IyZ7x.js";const _={class:"view-container auth-view"},u=a({__name:"AuthView",setup(d){return(p,e)=>(r(),n("div",_,[c("button",{onClick:e[0]||(e[0]=(...s)=>t(o)&&t(o)(...s))},"Войти с помощью Discord")]))}}),f=i(u,[["__scopeId","data-v-2d008261"]]);export{f as default};
